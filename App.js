@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, requireNativeComponent} from 'react-native';
+import React, { Component } from 'react';
+import { mapping, dark } from '@eva-design/eva';
+import { ApplicationProvider } from 'react-native-ui-kitten';
+import Landing from './src/Landing';
 
-const Navigator = requireNativeComponent('NavigatorView')
-
+global.theme = 'dark'
 export default class App extends Component {
   render() {
     return (
-      <View>
-        <Text>Welcome to React Native!</Text>
-        <Navigator />
-      </View>
+      <ApplicationProvider mapping={mapping} theme={dark}>
+        <Landing />
+      </ApplicationProvider>
     );
   }
 }
