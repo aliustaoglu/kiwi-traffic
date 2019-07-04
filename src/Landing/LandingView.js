@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Text, Button, TopNavigation, BottomNavigation } from 'react-native-ui-kitten';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { darkColours } from '../utils/colour';
 import styled from 'styled-components/native';
 import auckland from '../images/auckland.jpg';
@@ -17,11 +17,7 @@ const Wrapper = styled.View`
   align-items: center;
 `;
 
-class Landing extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return { header: null };
-  };
-
+class LandingView extends React.Component {
   render() {
     return (
       <>
@@ -36,17 +32,9 @@ class Landing extends React.Component {
             </Wrapper>
           </ScrollView>
         </Layout>
-        <BottomNavigation selectedIndex={1}>
-          <Layout>
-            <Text>Settings</Text>
-          </Layout>
-          <Layout>
-            <Text>About</Text>
-          </Layout>
-        </BottomNavigation>
       </>
     );
   }
 }
 
-export default Landing;
+export default LandingView;

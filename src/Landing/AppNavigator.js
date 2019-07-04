@@ -1,15 +1,15 @@
-import { createAppContainer, createStackNavigator } from 'react-navigation';
-import Landing from './Landing';
+import { createAppContainer, createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import LandingTabs from './LandingTabs';
 import { View, Text } from 'react-native'
 
 const StackNavigator = createStackNavigator(
   {
-    Landing: {
-      screen: Landing
+    LandingTabs: {
+      screen: LandingTabs
     }
   },
   {
-    initialRouteName: 'Landing'
+    initialRouteName: 'LandingTabs'
   }
 );
 
