@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native';
 import { Layout, Text, Button, TopNavigation, BottomNavigation, BottomNavigationTab } from 'react-native-ui-kitten';
 import { createBottomTabNavigator } from 'react-navigation';
 import LandingView from './LandingView';
@@ -8,8 +9,8 @@ const BottomBar = props => {
   const routes = props.navigation.state.routes;
   const [selectedIndex, setSelectedIndex] = useState(0);
   const onSelect = idx => {
-    props.navigation.navigate(routes[idx].key)
-    setSelectedIndex(idx)
+    props.navigation.navigate(routes[idx].key);
+    setSelectedIndex(idx);
   };
   return (
     <BottomNavigation selectedIndex={selectedIndex} onSelect={onSelect}>
@@ -21,9 +22,11 @@ const BottomBar = props => {
 
 const Settings = () => {
   return (
-    <Layout>
-      <Text>SETTTT</Text>
-    </Layout>
+    <SafeAreaView style={{ height: '100%' }}>
+      <Layout>
+        <Text>SETTTT</Text>
+      </Layout>
+    </SafeAreaView>
   );
 };
 

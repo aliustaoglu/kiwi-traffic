@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Text, Button, TopNavigation, BottomNavigation } from 'react-native-ui-kitten';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, SafeAreaView } from 'react-native';
 import { darkColours } from '../utils/colour';
 import styled from 'styled-components/native';
 import auckland from '../images/auckland.jpg';
@@ -20,7 +20,7 @@ const Wrapper = styled.View`
 class LandingView extends React.Component {
   render() {
     return (
-      <>
+      <SafeAreaView style={{ height: '100%' }}>
         <TopNavigation subtitle="New Zealand's traffic updates" title="Kiwi Traffic" />
         <Layout style={{ flex: 1, backgroundColor: darkColours['color-basic-focus'], paddingTop: 50 }}>
           <ScrollView>
@@ -32,7 +32,7 @@ class LandingView extends React.Component {
             </Wrapper>
           </ScrollView>
         </Layout>
-      </>
+      </SafeAreaView>
     );
   }
 }
