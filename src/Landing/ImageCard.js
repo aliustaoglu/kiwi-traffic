@@ -3,6 +3,7 @@ import { TouchableOpacity, ImageBackground } from 'react-native';
 import { Layout, Text } from 'react-native-ui-kitten';
 import FastImage from 'react-native-fast-image';
 import styled from 'styled-components/native';
+import { withNavigation } from 'react-navigation';
 
 const Card = styled(Layout)`
   height: 175px;
@@ -14,9 +15,9 @@ const Card = styled(Layout)`
   margin-bottom: 20px;
 `;
 
-const ImageCard = ({ image, text }) => {
+const ImageCard = ({ image, text, navigation, routeName }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate(routeName)}>
       <Card>
         <ImageBackground style={{ width: 175, height: 175 }} imageStyle={{ borderRadius: 16 }} source={image} resizeMode={FastImage.resizeMode.cover}>
           <Text style={{ fontWeight: '800', fontSize: 16,  alignSelf: 'center', marginTop: 10 }}>{text}</Text>
@@ -26,4 +27,4 @@ const ImageCard = ({ image, text }) => {
   );
 };
 
-export default ImageCard;
+export default withNavigation(ImageCard);

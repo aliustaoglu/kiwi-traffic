@@ -25,7 +25,7 @@ class LandingView extends React.Component {
         <Layout style={{ flex: 1, backgroundColor: darkColours['color-basic-focus'], paddingTop: 50 }}>
           <ScrollView>
             <Wrapper>
-              <ImageCard image={auckland} text="Auckland Traffic" />
+              <ImageCard image={auckland} text="Auckland Traffic" routeName="AucklandTraffic" />
               <ImageCard image={christchurch} text="Christchurch Traffic" />
               <ImageCard image={highway} text="Highway Traffic" />
               <ImageCard image={camera} text="Traffic Cams" />

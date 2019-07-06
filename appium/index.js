@@ -5,7 +5,8 @@ const opts = {
     platformName: 'iOS',
     platformVersion: '12.2',
     deviceName: 'iPhone 6s Plus',
-    app: '/Users/cuneytaliustaoglu/Library/Developer/Xcode/DerivedData/kiwiTraffic-byragdztxiwrkqbgekqbnmowichn/Build/Products/Release-iphonesimulator/kiwiTraffic.app'
+    //app: '/Users/cuneytaliustaoglu/Library/Developer/Xcode/DerivedData/kiwiTraffic-byragdztxiwrkqbgekqbnmowichn/Build/Products/Release-iphonesimulator/kiwiTraffic.app'
+    app: '/Builds/ios/kiwiTraffic/Release-iphoneos/kiwiTraffic.app'
   }
 };
 

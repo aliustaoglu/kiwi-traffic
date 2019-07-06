@@ -12,7 +12,8 @@
     "watchman-clear": "watchman watch-del-all && rm -rf node_modules/ && yarn cache clean && yarn install",
     "install-apk": "adb install android/app/release/app-release.apk",
     "uninstall-apk": "adb uninstall doctor.surf.report",
-    "reinstall-apk": "npm run uninstall-apk && npm run install-apk"
+    "reinstall-apk": "npm run uninstall-apk && npm run install-apk",
+    "build-ios": "cd ios && xcodebuild -workspace kiwiTraffic.xcworkspace -scheme kiwiTraffic  -configuration Release SYMROOT=/Builds/ios/kiwiTraffic"
   },
   "dependencies": {
     "@eva-design/eva": "^1.0.1",
