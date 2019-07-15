@@ -13,7 +13,7 @@ const StackNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'LandingTabs'
+    initialRouteName: 'AucklandTraffic'
   }
 );
 
