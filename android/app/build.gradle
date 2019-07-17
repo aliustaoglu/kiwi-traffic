@@ -93,9 +93,10 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def googleMapApiKey = properties.getProperty('google.map.key')
+//Properties properties = new Properties()
+//properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//def googleMapApiKey = properties.getProperty('google.map.key')
+def googleMapApiKey = System.getenv("googleMapApiKey")
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
