@@ -34,11 +34,11 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class GMap extends MapView {
+public class GMapAuckland extends MapView {
     public GoogleMap googleMap;
     private GeoApiContext geoApi;
 
-    public GMap(Context context) {
+    public GMapAuckland(Context context) {
         super(context);
 
 

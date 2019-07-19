@@ -2,9 +2,7 @@ package com.kiwitraffic.NativeModules;
 
 import android.view.View;
 import com.facebook.react.bridge.ReactContext;
-import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.ReadableNativeArray;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
@@ -15,20 +13,20 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class GoogleMapView extends SimpleViewManager<View> {
-    private GMap mapView;
+public class GoogleMapAucklandView extends SimpleViewManager<View> {
+    private GMapAuckland mapView;
     private ReactContext rctContext;
 
     @Nonnull
     @Override
     public String getName() {
-        return "GoogleMapView";
+        return "GoogleMapAucklandView";
     }
 
     @Nonnull
     @Override
     protected View createViewInstance(@Nonnull ThemedReactContext reactContext) {
-        mapView = new GMap(reactContext);
+        mapView = new GMapAuckland(reactContext);
         mapView.onCreate(null);
         mapView.onResume();
         return mapView;
