@@ -1,27 +1,15 @@
 package com.kiwitraffic.NativeModules;
 
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.ReadableNativeMap;
-import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.ReadableNativeArray;
 import com.facebook.react.common.MapBuilder;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -54,6 +42,11 @@ public class GoogleMapView extends SimpleViewManager<View> {
     @ReactProp(name = "zoom")
     public void setZoom(MapView view, @Nullable Integer zoom) {
         mapView.setZoom(zoom);
+    }
+
+    @ReactProp(name="polylines")
+    public void setPolylines(MapView view, @Nullable ReadableMap polylines){
+        mapView.setPolylines(polylines);
     }
 
     @Nullable
