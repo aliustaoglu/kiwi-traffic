@@ -47,7 +47,7 @@ public class GMap extends MapView {
             //googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(100, 100)));
         });
         try {
-            ApplicationInfo app = context.getPackageManager().getApplicationInfo(context.getPackageName(),PackageManager.GET_META_DATA);
+            ApplicationInfo app = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = app.metaData;
             String apiKey = bundle.getString("com.google.android.geo.API_KEY");
             geoApi = new GeoApiContext.Builder().apiKey(apiKey).build();
@@ -56,30 +56,25 @@ public class GMap extends MapView {
         }
     }
 
-    public void setLatLng(Double lat, Double lng){
+    public void setLatLng(Double lat, Double lng) {
         this.getMapAsync(gMap -> {
             gMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lng)));
         });
     }
 
-    public void setZoom(int zoom){
+    public void setZoom(int zoom) {
         this.getMapAsync(gMap -> {
             gMap.moveCamera(CameraUpdateFactory.zoomTo(zoom));
             reactNativeEvent("onMapReady", "");
         });
     }
 
-    public void setPolylines(ReadableMap polylines){
-        //polylines.getArray("heavy").getMap(0).getString("motorway")
-        double startLat = Double.parseDouble(polylines.getArray("heavy").getMap(0).getString("startLat"));
-        double startLon = Double.parseDouble(polylines.getArray("heavy").getMap(0).getString("startLon"));
-        double endLat = Double.parseDouble(polylines.getArray("heavy").getMap(0).getString("endLat"));
-        double endLon = Double.parseDouble(polylines.getArray("heavy").getMap(0).getString("endLon"));
+    private void setSingleRoute(ReadableMap route, int color) {
+        double startLat = Double.parseDouble(route.getString("startLat"));
+        double startLon = Double.parseDouble(route.getString("startLon"));
+        double endLat = Double.parseDouble(route.getString("endLat"));
+        double endLon = Double.parseDouble(route.getString("endLon"));
         this.getMapAsync(gMap -> {
-
-
-
-
             DirectionsApiRequest req = DirectionsApi.newRequest(geoApi);
             com.google.maps.model.LatLng start = new com.google.maps.model.LatLng();
             com.google.maps.model.LatLng end = new com.google.maps.model.LatLng();
@@ -94,18 +89,28 @@ public class GMap extends MapView {
 
                 PolylineOptions polyOptions = new PolylineOptions();
                 List<LatLng> points = PolyUtil.decode(encodedPolyline);
-                for(int i=0;i<points.size();i++){
+                for (int i = 0; i < points.size(); i++) {
                     polyOptions.add(points.get(i));
                 }
-                polyOptions.width(15).color(Color.RED);
+                polyOptions.width(15).color(color);
 
                 gMap.addPolyline(polyOptions);
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         });
+    }
+
+    public void setPolylines(ReadableMap polylines) {
+        ReadableArray moderateArray = polylines.getArray("moderate");
+        ReadableArray heavyArray = polylines.getArray("heavy");
+        for(int i=0;i<heavyArray.size();i++){
+            setSingleRoute(heavyArray.getMap(i), Color.RED);
+        }
+        for(int i=0;i<moderateArray.size();i++){
+            setSingleRoute(moderateArray.getMap(i), Color.rgb(255, 165, 0));
+        }
     }
 
     private void reactNativeEvent(String eventName, String message) {
