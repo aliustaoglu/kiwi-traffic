@@ -1,13 +1,16 @@
 package com.kiwitraffic.NativeModules;
 
 import android.view.View;
+
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.google.android.gms.maps.MapView;
+
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -42,9 +45,14 @@ public class GoogleMapAucklandView extends SimpleViewManager<View> {
         mapView.setZoom(zoom);
     }
 
-    @ReactProp(name="polylines")
-    public void setPolylines(MapView view, @Nullable ReadableMap polylines){
+    @ReactProp(name = "polylines")
+    public void setPolylines(MapView view, @Nullable ReadableMap polylines) {
         mapView.setPolylines(polylines);
+    }
+
+    @ReactProp(name = "signs")
+    public void setSigns(MapView view, @Nullable ReadableArray signs) {
+        mapView.setSigns(signs);
     }
 
     @Nullable

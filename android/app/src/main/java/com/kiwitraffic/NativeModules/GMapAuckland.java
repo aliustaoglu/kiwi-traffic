@@ -30,6 +30,7 @@ import com.google.maps.android.PolyUtil;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.EncodedPolyline;
 import com.google.maps.model.TravelMode;
+
 import java.util.List;
 
 
@@ -115,12 +116,28 @@ public class GMapAuckland extends MapView {
     public void setPolylines(ReadableMap polylines) {
         ReadableArray moderateArray = polylines.getArray("moderate");
         ReadableArray heavyArray = polylines.getArray("heavy");
-        for(int i=0;i<heavyArray.size();i++){
+        for (int i = 0; i < heavyArray.size(); i++) {
             setSingleRoute(heavyArray.getMap(i), "heavy", Color.RED);
         }
-        for(int i=0;i<moderateArray.size();i++){
+        for (int i = 0; i < moderateArray.size(); i++) {
             setSingleRoute(moderateArray.getMap(i), "moderate", Color.rgb(255, 165, 0));
         }
+    }
+
+    public void setSigns(ReadableArray signs) {
+        this.getMapAsync( gMap -> {
+            for (int i = 0; i < signs.size(); i++) {
+                String message = signs.getMap(i).getString("message");
+                String name = signs.getMap(i).getString("name");
+                Double lat = Double.parseDouble(signs.getMap(i).getString("lat"));
+                Double lon = Double.parseDouble(signs.getMap(i).getString("lon"));
+
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(new LatLng(lat, lon)).title(name).snippet(message);
+                gMap.addMarker(markerOptions);
+            }
+        });
+
     }
 
     private void reactNativeEvent(String eventName, String message) {

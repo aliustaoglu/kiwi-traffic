@@ -81,9 +81,8 @@ class AucklandTraffic extends React.Component {
     })
     parseString(xmlSigns.data, (err, result) => {
       const signsData = getSignsData(result)
-      that.setState({ signsData })
-      const messages = signsData.filter(sign => sign.message.length > 0)
-      console.log(messages)
+      const notEmptySigns = signsData.filter(sign => sign.message.length > 0)
+      that.setState({ signsData: notEmptySigns })
     })
   }
 
@@ -93,7 +92,7 @@ class AucklandTraffic extends React.Component {
     return (
       <SafeAreaView style={{ height: '100%' }}>
         <Layout style={{ height: '100%' }}>
-          <MapView polylines={this.state.data} latLng={this.state.latLng} zoom={12} onMapReady={this.onMapReady} />
+          <MapView polylines={this.state.data} latLng={this.state.latLng} zoom={12} onMapReady={this.onMapReady} signs={this.state.signsData} />
         </Layout>
       </SafeAreaView>
     )
