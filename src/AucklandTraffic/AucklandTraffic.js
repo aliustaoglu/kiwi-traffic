@@ -3,7 +3,7 @@ import { Layout, Text } from 'react-native-ui-kitten'
 import { SafeAreaView } from 'react-navigation'
 import MapView from '../Map/MapView'
 import axios from 'axios'
-import { aucklandTrafficConditions, aucklandHeaders } from '../api/endpoints'
+import { aucklandTrafficConditions, aucklandHeaders, aucklandSigns } from '../api/endpoints'
 import { parseString } from 'react-native-xml2js'
 
 const getTrafficData = result => {
@@ -32,6 +32,23 @@ const getTrafficData = result => {
   }
 }
 
+const getSignsData = result => {
+  const signs = result['tns:getSignsResponse']['tns:sign']
+  return signs.map(sign => {
+    return {
+      id: sign['tns:id'][0],
+      identifier: sign['tns:identifier'][0],
+      name: sign['tns:name'][0],
+      description: sign['tns:description'][0],
+      direction: sign['tns:direction'][0],
+      message: sign['tns:current-message'][0],
+      update: sign['tns:last-update'][0],
+      lat: sign['tns:lat'][0],
+      lon: sign['tns:lon'][0]
+    }
+  })
+}
+
 class AucklandTraffic extends React.Component {
   constructor (props) {
     super(props)
@@ -44,23 +61,29 @@ class AucklandTraffic extends React.Component {
         heavy: [],
         moderate: [],
         free: []
-      }
+      },
+      signsData: []
     }
     this.onMapReady = this.onMapReady.bind(this)
   }
 
   async onMapReady () {
     const xmlAkl = await axios.get(aucklandTrafficConditions, { headers: aucklandHeaders })
+    const xmlSigns = await axios.get(aucklandSigns, { headers: aucklandHeaders })
     const that = this
     parseString(xmlAkl.data, function (err, result) {
       const trafficData = getTrafficData(result)
       that.setState({ trafficData })
-      console.log(trafficData)
       const heavy = trafficData.traffic.filter(t => t.congestion === 'Heavy')
       const moderate = trafficData.traffic.filter(t => t.congestion === 'Moderate')
       const free = trafficData.traffic.filter(t => t.congestion === 'Free Flow')
       that.setState({ data: { heavy, moderate, free } })
-      console.log(that.state)
+    })
+    parseString(xmlSigns.data, (err, result) => {
+      const signsData = getSignsData(result)
+      that.setState({ signsData })
+      const messages = signsData.filter(sign => sign.message.length > 0)
+      console.log(messages)
     })
   }
 
