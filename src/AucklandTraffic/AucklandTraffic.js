@@ -5,11 +5,11 @@ import { Layout, Text } from 'react-native-ui-kitten'
 import { SafeAreaView } from 'react-navigation'
 import MapView from '../Map/MapView'
 import axios from 'axios'
-import { aucklandTrafficConditions, aucklandHeaders, aucklandSigns } from '../api/endpoints'
+import { aucklandTrafficConditions, aucklandHeaders, aucklandSigns, aucklandCameras } from '../api/endpoints'
 import { parseString } from 'react-native-xml2js'
 import { preRoutes } from '../assets/routes'
 import MapLegend from './MapLegend'
-import { merge } from 'ramda'
+import { path } from 'ramda'
 
 const getTrafficData = result => {
   const lastUpdated = result['tns:getTrafficConditionsResponse']['tns:trafficConditions'][0]['tns:lastUpdated']
@@ -54,6 +54,30 @@ const getSignsData = result => {
   })
 }
 
+const getCamsData = result => {
+  const cams = result['tns:getCamerasResponse']['tns:camera']
+
+  const camsData = cams.map(cam => {
+    return {
+      congestionLocations: path(['tns:congestionLocations', 0], cam),
+      description: path(['tns:description', 0], cam),
+      direction: path(['tns:direction', 0], cam),
+      group: path(['tns:group', 0], cam),
+      id: path(['tns:id', 0], cam),
+      imageUrl: path(['tns:imageUrl', 0], cam),
+      lat: path(['tns:lat', 0], cam),
+      lon: path(['tns:lon', 0], cam),
+      name: path(['tns:name', 0], cam),
+      offline: path(['tns:offline', 0], cam),
+      region: path(['tns:region', 0], cam),
+      thumbUrl: path(['tns:thumbUrl', 0], cam),
+      underMaintenance: path(['tns:underMaintenance', 0], cam),
+      viewUrl: path(['tns:viewUrl', 0], cam)
+    }
+  })
+  return camsData
+}
+
 class AucklandTraffic extends React.Component {
   constructor (props) {
     super(props)
@@ -67,7 +91,8 @@ class AucklandTraffic extends React.Component {
         moderate: [],
         free: []
       },
-      signsData: []
+      signsData: [],
+      cameras: []
     }
     this.onMapReady = this.onMapReady.bind(this)
   }
@@ -75,6 +100,7 @@ class AucklandTraffic extends React.Component {
   async onMapReady () {
     const xmlAkl = await axios.get(aucklandTrafficConditions, { headers: aucklandHeaders })
     const xmlSigns = await axios.get(aucklandSigns, { headers: aucklandHeaders })
+    const cameras = await axios.get(aucklandCameras, { headers: aucklandHeaders })
     const that = this
     parseString(xmlAkl.data, function (err, result) {
       const trafficData = getTrafficData(result)
@@ -83,12 +109,16 @@ class AucklandTraffic extends React.Component {
       const moderate = trafficData.traffic.filter(t => t.congestion === 'Moderate')
       const free = trafficData.traffic.filter(t => t.congestion === 'Free Flow')
       that.setState({ data: { heavy, moderate, free } })
-      console.log(JSON.stringify(that.state.data))
     })
     parseString(xmlSigns.data, (err, result) => {
       const signsData = getSignsData(result)
       const notEmptySigns = signsData.filter(sign => sign.message.length > 0)
       that.setState({ signsData: notEmptySigns })
+    })
+    parseString(cameras.data, (err, result) => {
+      const camsData = getCamsData(result)
+      this.setState({ cameras: camsData })
+      console.log(camsData)
     })
   }
 
@@ -107,6 +137,7 @@ class AucklandTraffic extends React.Component {
             onMapReady={this.onMapReady}
             signs={this.state.signsData}
             mapReducer={this.props.mapReducer}
+            cameras={this.state.cameras}
           />
           <MapLegend />
         </Layout>

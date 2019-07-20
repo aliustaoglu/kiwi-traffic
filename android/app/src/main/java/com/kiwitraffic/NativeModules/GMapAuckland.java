@@ -214,6 +214,22 @@ public class GMapAuckland extends MapView {
         existingRoutes = preRoutes;
     }
 
+    public void setCameras(ReadableArray cameras) {
+
+        for (int i = 0; i < cameras.size(); i++) {
+            String camDescription = cameras.getMap(i).getString("description");
+            String camName = cameras.getMap(i).getString("name");
+            String thumbUrl = cameras.getMap(i).getString("thumbUrl");
+            String imageUrl = cameras.getMap(i).getString("imageUrl");
+            Double camLat = Double.parseDouble(cameras.getMap(i).getString("lat"));
+            Double camLon = Double.parseDouble(cameras.getMap(i).getString("lon"));
+
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(new LatLng(camLat, camLon)).title(camName).snippet(camDescription);
+            Marker camMarker = googleMap.addMarker(markerOptions);
+        }
+    }
+
     public void setMapReducer(ReadableMap mpReducer) {
         mapReducer = mpReducer;
         Boolean showInfo = mapReducer.getBoolean("showInfo");
@@ -222,9 +238,9 @@ public class GMapAuckland extends MapView {
         Boolean showHeavy = mapReducer.getBoolean("showHeavy");
 
         markersSign.forEach(marker -> marker.setVisible(showInfo));
-        markersFree.forEach(marker -> marker.setVisible(showFree) );
-        markersModerate.forEach(marker -> marker.setVisible(showModerate) );
-        markersHeavy.forEach(marker -> marker.setVisible(showHeavy) );
+        markersFree.forEach(marker -> marker.setVisible(showFree));
+        markersModerate.forEach(marker -> marker.setVisible(showModerate));
+        markersHeavy.forEach(marker -> marker.setVisible(showHeavy));
         polyHeavy.forEach(polyline -> polyline.setVisible(showHeavy));
         polyModerate.forEach(polyline -> polyline.setVisible(showModerate));
         polyFree.forEach(polyline -> polyline.setVisible(showFree));

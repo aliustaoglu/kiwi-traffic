@@ -47,7 +47,7 @@ public class GoogleMapAucklandView extends SimpleViewManager<View> {
 
     @ReactProp(name = "polylines")
     public void setPolylines(MapView view, @Nullable ReadableMap polylines) {
-        view.getMapAsync( gmap -> {
+        view.getMapAsync(gmap -> {
             mapView.setPolylines(polylines);
         });
     }
@@ -57,18 +57,23 @@ public class GoogleMapAucklandView extends SimpleViewManager<View> {
         mapView.setSigns(signs);
     }
 
-    @ReactProp(name="preRoutes")
-    public  void setPreRoutes(MapView view, @Nullable ReadableMap preRoutes){
-        view.getMapAsync( gmap -> {
+    @ReactProp(name = "preRoutes")
+    public void setPreRoutes(MapView view, @Nullable ReadableMap preRoutes) {
+        view.getMapAsync(gmap -> {
             mapView.setPreRoutes(preRoutes);
         });
     }
 
-    @ReactProp(name="mapReducer")
-    public void setMapReducer(MapView view, @Nullable ReadableMap mapReducer){
-        view.getMapAsync( gMap -> {
+    @ReactProp(name = "mapReducer")
+    public void setMapReducer(MapView view, @Nullable ReadableMap mapReducer) {
+        view.getMapAsync(gMap -> {
             mapView.setMapReducer(mapReducer);
-        } );
+        });
+    }
+
+    @ReactProp(name = "cameras")
+    public void setCameras(MapView view, @Nullable ReadableArray cameras) {
+        view.getMapAsync(gMap -> mapView.setCameras(cameras));
     }
 
     @Nullable
