@@ -38,7 +38,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class GMapAuckland extends MapView {
@@ -81,7 +83,8 @@ public class GMapAuckland extends MapView {
 
         this.getMapAsync(gMap -> {
             googleMap = gMap;
-            //googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(100, 100)));
+            GoogleMap.InfoWindowAdapter infoW = new MarkerInfoWindowAdapter(getContext());
+            googleMap.setInfoWindowAdapter(infoW);
         });
         try {
             ApplicationInfo app = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
@@ -164,8 +167,6 @@ public class GMapAuckland extends MapView {
                 Marker markerTraffic = googleMap.addMarker(markerOptions);
                 if (trafficType == "moderate") markersModerate.add(markerTraffic);
                 if (trafficType == "heavy") markersHeavy.add(markerTraffic);
-                GoogleMap.InfoWindowAdapter infoW = new MarkerInfoWindowAdapter(getContext());
-                googleMap.setInfoWindowAdapter(infoW);
             }
 
             JSONObject jo = new JSONObject();
@@ -224,9 +225,15 @@ public class GMapAuckland extends MapView {
             Double camLat = Double.parseDouble(cameras.getMap(i).getString("lat"));
             Double camLon = Double.parseDouble(cameras.getMap(i).getString("lon"));
 
+
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(new LatLng(camLat, camLon)).title(camName).snippet(camDescription);
+
             Marker camMarker = googleMap.addMarker(markerOptions);
+            Map<String, String > camObject = new HashMap<>();
+            camObject.put("markerType", "camera");
+            camObject.put("thumbUrl", thumbUrl);
+            camMarker.setTag(camObject);
         }
     }
 
