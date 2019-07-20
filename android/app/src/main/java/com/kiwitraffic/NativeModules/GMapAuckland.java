@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableArray;
@@ -30,7 +31,9 @@ import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.EncodedPolyline;
 import com.google.maps.model.TravelMode;
 import com.kiwitraffic.NativeModules.MapComponents.MarkerInfoWindowAdapter;
+
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -148,14 +151,14 @@ public class GMapAuckland extends MapView {
         ReadableArray moderateArray = polylines.getArray("moderate");
         ReadableArray heavyArray = polylines.getArray("heavy");
         ReadableArray freeArray = polylines.getArray("free");
-        for (int i = 0; i < heavyArray.size(); i++) {
-            setSingleRoute(heavyArray.getMap(i), "heavy", Color.RED);
+        for (int i = 0; i < freeArray.size(); i++) {
+            setSingleRoute(freeArray.getMap(i), "free", Color.rgb(0, 255, 0));
         }
         for (int i = 0; i < moderateArray.size(); i++) {
             setSingleRoute(moderateArray.getMap(i), "moderate", Color.rgb(255, 165, 0));
         }
-        for (int i = 0; i < freeArray.size(); i++) {
-            setSingleRoute(freeArray.getMap(i), "free", Color.rgb(0, 255, 0));
+        for (int i = 0; i < heavyArray.size(); i++) {
+            setSingleRoute(heavyArray.getMap(i), "heavy", Color.RED);
         }
     }
 
