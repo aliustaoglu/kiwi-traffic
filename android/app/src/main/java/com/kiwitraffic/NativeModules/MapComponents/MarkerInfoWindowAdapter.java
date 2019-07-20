@@ -5,14 +5,21 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
@@ -55,6 +62,12 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                 TextView abc = new TextView(context);
                 abc.setText(markerParams.get("thumbUrl"));
                 info.addView(abc);
+
+                ImageView imgCam = new ImageView(context);
+                imgCam.setLayoutParams(new LinearLayout.LayoutParams(500, 500));
+                info.addView(imgCam);
+                Glide.with(context).load(markerParams.get("imageUrl")).into(imgCam);
+                imgCam.invalidate();
             }
         }
 

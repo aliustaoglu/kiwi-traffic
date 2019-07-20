@@ -75,7 +75,7 @@ public class GMapAuckland extends MapView {
     }
 
     private BitmapDescriptor getIcon(String fileName) {
-        return getIcon(fileName, 96);
+        return getIcon(fileName, 64);
     }
 
     public GMapAuckland(Context context) {
@@ -236,6 +236,7 @@ public class GMapAuckland extends MapView {
             Map<String, String > camObject = new HashMap<>();
             camObject.put("markerType", "camera");
             camObject.put("thumbUrl", thumbUrl);
+            camObject.put("imageUrl", imageUrl);
             camMarker.setTag(camObject);
         }
     }
