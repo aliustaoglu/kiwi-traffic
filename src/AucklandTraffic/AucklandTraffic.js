@@ -103,7 +103,7 @@ class AucklandTraffic extends React.Component {
             polylines={this.state.data}
             latLng={this.state.latLng}
             zoom={12}
-            onMapReady={this.onMapReady}
+            onMapReady={null}
             signs={this.state.signsData}
           />
           <MapLegend />
