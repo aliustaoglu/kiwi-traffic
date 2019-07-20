@@ -7,7 +7,7 @@ class MapView extends React.Component {
     super(props)
   }
   render () {
-    return <GoogleMapAucklandView {...this.props} style={StyleSheet.absoluteFillObject}  />
+    return <GoogleMapAucklandView {...this.props} style={this.props.style} />
   }
 }
 

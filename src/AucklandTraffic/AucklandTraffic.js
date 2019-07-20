@@ -1,11 +1,14 @@
 import React from 'react'
+import { View, StyleSheet } from 'react-native'
 import { Layout, Text } from 'react-native-ui-kitten'
 import { SafeAreaView } from 'react-navigation'
 import MapView from '../Map/MapView'
 import axios from 'axios'
 import { aucklandTrafficConditions, aucklandHeaders, aucklandSigns } from '../api/endpoints'
 import { parseString } from 'react-native-xml2js'
-import { preRoutes } from '../assets/routes';
+import { preRoutes } from '../assets/routes'
+import MapLegend from './MapLegend'
+import { merge } from 'ramda'
 
 const getTrafficData = result => {
   const lastUpdated = result['tns:getTrafficConditionsResponse']['tns:trafficConditions'][0]['tns:lastUpdated']
@@ -79,14 +82,13 @@ class AucklandTraffic extends React.Component {
       const moderate = trafficData.traffic.filter(t => t.congestion === 'Moderate')
       const free = trafficData.traffic.filter(t => t.congestion === 'Free Flow')
       that.setState({ data: { heavy, moderate, free } })
-      console.log(JSON.stringify(that.state.data));
+      console.log(JSON.stringify(that.state.data))
     })
     parseString(xmlSigns.data, (err, result) => {
       const signsData = getSignsData(result)
       const notEmptySigns = signsData.filter(sign => sign.message.length > 0)
       that.setState({ signsData: notEmptySigns })
     })
-
   }
 
   async componentDidMount () {}
@@ -95,7 +97,16 @@ class AucklandTraffic extends React.Component {
     return (
       <SafeAreaView style={{ height: '100%' }}>
         <Layout style={{ height: '100%' }}>
-          <MapView preRoutes={preRoutes} polylines={this.state.data} latLng={this.state.latLng} zoom={12} onMapReady={this.onMapReady} signs={this.state.signsData} />
+          <MapView
+            style={{ height: '90%' }}
+            preRoutes={preRoutes}
+            polylines={this.state.data}
+            latLng={this.state.latLng}
+            zoom={12}
+            onMapReady={this.onMapReady}
+            signs={this.state.signsData}
+          />
+          <MapLegend />
         </Layout>
       </SafeAreaView>
     )

@@ -125,7 +125,7 @@ public class GMapAuckland extends MapView {
             for (int i = 0; i < points.size(); i++) {
                 polyOptions.add(points.get(i));
             }
-            int lineWidth = trafficType == "free" ? 6 : 10;
+            int lineWidth = trafficType == "free" ? 6 : 12;
             polyOptions.width(lineWidth).color(color);
 
             googleMap.addPolyline(polyOptions);
