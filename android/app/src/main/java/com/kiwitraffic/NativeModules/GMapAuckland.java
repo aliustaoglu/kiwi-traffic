@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.DirectionsApi;
 import com.google.maps.DirectionsApiRequest;
@@ -46,7 +47,15 @@ public class GMapAuckland extends MapView {
     private AssetManager assetManager;
     private ReadableMap existingRoutes;
     private ReadableMap mapReducer;
-    private List<Marker> signMarkers = new ArrayList<>();
+
+    private List<Marker> markersSign = new ArrayList<>();
+    private List<Marker> markersFree = new ArrayList<>();
+    private List<Marker> markersModerate = new ArrayList<>();
+    private List<Marker> markersHeavy = new ArrayList<>();
+    private List<Polyline> polyFree = new ArrayList<>();
+    private List<Polyline> polyModerate = new ArrayList<>();
+    private List<Polyline> polyHeavy = new ArrayList<>();
+
 
     List<JSONObject> jsList = new ArrayList<>();
 
@@ -97,6 +106,20 @@ public class GMapAuckland extends MapView {
         });
     }
 
+    public void pushPolylineList(Polyline poly, String trafficType) {
+        switch (trafficType) {
+            case "free":
+                polyFree.add(poly);
+                break;
+            case "moderate":
+                polyModerate.add(poly);
+                break;
+            case "heavy":
+                polyHeavy.add(poly);
+                break;
+        }
+    }
+
     private void setSingleRoute(ReadableMap route, String trafficType, int color) {
         double startLat = Double.parseDouble(route.getString("startLat"));
         double startLon = Double.parseDouble(route.getString("startLon"));
@@ -131,13 +154,16 @@ public class GMapAuckland extends MapView {
             int lineWidth = trafficType == "free" ? 6 : 12;
             polyOptions.width(lineWidth).color(color);
 
-            googleMap.addPolyline(polyOptions);
+            Polyline poly = googleMap.addPolyline(polyOptions);
+            pushPolylineList(poly, trafficType);
 
             if (trafficType != "free") {
                 BitmapDescriptor img = getIcon("img/traffic-" + trafficType + ".png");
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(new LatLng(startLat, startLon)).icon(img).title(title).snippet(inOut + "bound : " + trafficType + " traffic");
-                googleMap.addMarker(markerOptions);
+                Marker markerTraffic = googleMap.addMarker(markerOptions);
+                if (trafficType == "moderate") markersModerate.add(markerTraffic);
+                if (trafficType == "heavy") markersHeavy.add(markerTraffic);
                 GoogleMap.InfoWindowAdapter infoW = new MarkerInfoWindowAdapter(getContext());
                 googleMap.setInfoWindowAdapter(infoW);
             }
@@ -178,7 +204,7 @@ public class GMapAuckland extends MapView {
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(new LatLng(lat, lon)).title(name).icon(img).snippet(message);
                 Marker signMarker = gMap.addMarker(markerOptions);
-                signMarkers.add(signMarker);
+                markersSign.add(signMarker);
             }
         });
 
@@ -195,8 +221,13 @@ public class GMapAuckland extends MapView {
         Boolean showModerate = mapReducer.getBoolean("showModerate");
         Boolean showHeavy = mapReducer.getBoolean("showHeavy");
 
-        signMarkers.forEach(marker -> marker.setVisible(showInfo));
-
+        markersSign.forEach(marker -> marker.setVisible(showInfo));
+        markersFree.forEach(marker -> marker.setVisible(showFree) );
+        markersModerate.forEach(marker -> marker.setVisible(showModerate) );
+        markersHeavy.forEach(marker -> marker.setVisible(showHeavy) );
+        polyHeavy.forEach(polyline -> polyline.setVisible(showHeavy));
+        polyModerate.forEach(polyline -> polyline.setVisible(showModerate));
+        polyFree.forEach(polyline -> polyline.setVisible(showFree));
     }
 
     private void reactNativeEvent(String eventName, String message) {
