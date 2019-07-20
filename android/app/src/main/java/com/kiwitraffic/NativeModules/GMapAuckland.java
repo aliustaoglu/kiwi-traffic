@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableArray;
@@ -30,10 +29,8 @@ import com.google.maps.android.PolyUtil;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.EncodedPolyline;
 import com.google.maps.model.TravelMode;
-
-import org.json.JSONArray;
+import com.kiwitraffic.NativeModules.MapComponents.MarkerInfoWindowAdapter;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,8 +130,10 @@ public class GMapAuckland extends MapView {
             if (trafficType != "free") {
                 BitmapDescriptor img = getIcon("img/traffic-" + trafficType + ".png");
                 MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(new LatLng(startLat, startLon)).title(title).icon(img).snippet(inOut + "bound : " + trafficType + " traffic");
+                markerOptions.position(new LatLng(startLat, startLon)).icon(img).title(title).snippet(inOut + "bound : " + trafficType + " traffic");
                 googleMap.addMarker(markerOptions);
+                GoogleMap.InfoWindowAdapter infoW = new MarkerInfoWindowAdapter(getContext());
+                googleMap.setInfoWindowAdapter(infoW);
             }
 
             JSONObject jo = new JSONObject();
