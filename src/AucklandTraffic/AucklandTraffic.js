@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
+import { connect } from 'react-redux'
 import { Layout, Text } from 'react-native-ui-kitten'
 import { SafeAreaView } from 'react-navigation'
 import MapView from '../Map/MapView'
@@ -103,8 +104,9 @@ class AucklandTraffic extends React.Component {
             polylines={this.state.data}
             latLng={this.state.latLng}
             zoom={12}
-            onMapReady={null}
+            onMapReady={this.onMapReady}
             signs={this.state.signsData}
+            mapReducer={this.props.mapReducer}
           />
           <MapLegend />
         </Layout>
@@ -113,4 +115,10 @@ class AucklandTraffic extends React.Component {
   }
 }
 
-export default AucklandTraffic
+const mapStateToProps = state => {
+  return {
+    mapReducer: state.mapReducer
+  }
+}
+
+export default connect(mapStateToProps)(AucklandTraffic)

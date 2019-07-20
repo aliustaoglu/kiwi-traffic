@@ -62,7 +62,13 @@ public class GoogleMapAucklandView extends SimpleViewManager<View> {
         view.getMapAsync( gmap -> {
             mapView.setPreRoutes(preRoutes);
         });
+    }
 
+    @ReactProp(name="mapReducer")
+    public void setMapReducer(MapView view, @Nullable ReadableMap mapReducer){
+        view.getMapAsync( gMap -> {
+            mapView.setMapReducer(mapReducer);
+        } );
     }
 
     @Nullable

@@ -21,6 +21,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.DirectionsApi;
@@ -44,6 +45,8 @@ public class GMapAuckland extends MapView {
     private GeoApiContext geoApi;
     private AssetManager assetManager;
     private ReadableMap existingRoutes;
+    private ReadableMap mapReducer;
+    private List<Marker> signMarkers = new ArrayList<>();
 
     List<JSONObject> jsList = new ArrayList<>();
 
@@ -174,7 +177,8 @@ public class GMapAuckland extends MapView {
 
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(new LatLng(lat, lon)).title(name).icon(img).snippet(message);
-                gMap.addMarker(markerOptions);
+                Marker signMarker = gMap.addMarker(markerOptions);
+                signMarkers.add(signMarker);
             }
         });
 
@@ -182,6 +186,17 @@ public class GMapAuckland extends MapView {
 
     public void setPreRoutes(ReadableMap preRoutes) {
         existingRoutes = preRoutes;
+    }
+
+    public void setMapReducer(ReadableMap mpReducer) {
+        mapReducer = mpReducer;
+        Boolean showInfo = mapReducer.getBoolean("showInfo");
+        Boolean showFree = mapReducer.getBoolean("showFree");
+        Boolean showModerate = mapReducer.getBoolean("showModerate");
+        Boolean showHeavy = mapReducer.getBoolean("showHeavy");
+
+        signMarkers.forEach(marker -> marker.setVisible(showInfo));
+
     }
 
     private void reactNativeEvent(String eventName, String message) {
