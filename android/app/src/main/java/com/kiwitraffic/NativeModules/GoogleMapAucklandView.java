@@ -47,12 +47,22 @@ public class GoogleMapAucklandView extends SimpleViewManager<View> {
 
     @ReactProp(name = "polylines")
     public void setPolylines(MapView view, @Nullable ReadableMap polylines) {
-        mapView.setPolylines(polylines);
+        view.getMapAsync( gmap -> {
+            mapView.setPolylines(polylines);
+        });
     }
 
     @ReactProp(name = "signs")
     public void setSigns(MapView view, @Nullable ReadableArray signs) {
         mapView.setSigns(signs);
+    }
+
+    @ReactProp(name="preRoutes")
+    public  void setPreRoutes(MapView view, @Nullable ReadableMap preRoutes){
+        view.getMapAsync( gmap -> {
+            mapView.setPreRoutes(preRoutes);
+        });
+
     }
 
     @Nullable
