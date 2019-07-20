@@ -6,7 +6,8 @@ const MAP_ACTIONS = {
   SET_SHOW_INFO: 'SET_SHOW_INFO',
   SET_SHOW_HEAVY: 'MAP.SET_SHOW_HEAVY',
   SET_SHOW_MODERATE: 'MAP.SET_SHOW_MODERATE',
-  SET_SHOW_FREE: 'MAP.SET_SHOW_FREE'
+  SET_SHOW_FREE: 'MAP.SET_SHOW_FREE',
+  SET_SHOW_CAMERA: 'MAP.SET_SHOW_CAMERA'
 }
 
 export const setProgress = createAction(MAP_ACTIONS.SET_PROGRESS)
@@ -14,13 +15,15 @@ export const setShowInfo = createAction(MAP_ACTIONS.SET_SHOW_INFO)
 export const setShowHeavy = createAction(MAP_ACTIONS.SET_SHOW_HEAVY)
 export const setShowModerate = createAction(MAP_ACTIONS.SET_SHOW_MODERATE)
 export const setShowFree = createAction(MAP_ACTIONS.SET_SHOW_FREE)
+export const setShowCamera = createAction(MAP_ACTIONS.SET_SHOW_CAMERA)
 
 const initialState = {
   isProgress: false,
   showInfo: true,
   showHeavy: true,
   showModerate: true,
-  showFree: false
+  showFree: false,
+  showCamera: true
 }
 
 const mapReducer = (state = initialState, action) => {
@@ -35,6 +38,8 @@ const mapReducer = (state = initialState, action) => {
       return merge(state, { showFree: action.payload })
     case setShowInfo().type:
       return merge(state, { showInfo: action.payload })
+    case setShowCamera().type:
+      return merge(state, { showCamera: action.payload })
     default:
       return state
   }

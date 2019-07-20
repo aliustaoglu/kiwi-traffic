@@ -4,12 +4,13 @@ import styled from 'styled-components/native'
 import { Layout, Text } from 'react-native-ui-kitten'
 import Image from 'react-native-fast-image'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { setShowHeavy, setShowModerate, setShowFree, setShowInfo } from '../redux/reducers/mapReducer'
+import { setShowHeavy, setShowModerate, setShowFree, setShowInfo, setShowCamera } from '../redux/reducers/mapReducer'
 
 const info = require('../../android/app/src/main/assets/img/info.png')
 const heavy = require('../../android/app/src/main/assets/img/traffic-heavy.png')
 const moderate = require('../../android/app/src/main/assets/img/traffic-moderate.png')
 const free = require('../../android/app/src/main/assets/img/traffic-free.png')
+const camImg = require('../../android/app/src/main/assets/img/traffic-cams.png')
 
 const Container = styled(Layout)`
   position: absolute;
@@ -29,7 +30,7 @@ class MapLegend extends React.Component {
 
   render () {
     const { mapReducer, dispatch } = this.props
-    const { showHeavy, showModerate, showFree, showInfo } = mapReducer
+    const { showHeavy, showModerate, showFree, showInfo, showCamera } = mapReducer
     return (
       <Container>
         <TouchableOpacity onPress={() => dispatch(setShowInfo(!showInfo))}>
@@ -43,6 +44,9 @@ class MapLegend extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => dispatch(setShowFree(!showFree))}>
           <Image source={free} style={{ width: 50, height: 50, opacity: showFree ? 1 : 0.35 }} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => dispatch(setShowCamera(!showCamera))}>
+          <Image source={camImg} style={{ width: 50, height: 50, opacity: showCamera ? 1 : 0.35 }} />
         </TouchableOpacity>
       </Container>
     )

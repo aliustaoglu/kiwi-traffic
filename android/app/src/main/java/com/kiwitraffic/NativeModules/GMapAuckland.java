@@ -54,6 +54,7 @@ public class GMapAuckland extends MapView {
     private List<Marker> markersFree = new ArrayList<>();
     private List<Marker> markersModerate = new ArrayList<>();
     private List<Marker> markersHeavy = new ArrayList<>();
+    private List<Marker> markersCamera = new ArrayList<>();
     private List<Polyline> polyFree = new ArrayList<>();
     private List<Polyline> polyModerate = new ArrayList<>();
     private List<Polyline> polyHeavy = new ArrayList<>();
@@ -227,9 +228,11 @@ public class GMapAuckland extends MapView {
 
 
             MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(new LatLng(camLat, camLon)).title(camName).snippet(camDescription);
+            BitmapDescriptor img = getIcon("img/traffic-cams.png");
+            markerOptions.position(new LatLng(camLat, camLon)).title(camName).snippet(camDescription).icon(img);
 
             Marker camMarker = googleMap.addMarker(markerOptions);
+            markersCamera.add(camMarker);
             Map<String, String > camObject = new HashMap<>();
             camObject.put("markerType", "camera");
             camObject.put("thumbUrl", thumbUrl);
@@ -243,11 +246,13 @@ public class GMapAuckland extends MapView {
         Boolean showFree = mapReducer.getBoolean("showFree");
         Boolean showModerate = mapReducer.getBoolean("showModerate");
         Boolean showHeavy = mapReducer.getBoolean("showHeavy");
+        Boolean showCamera = mapReducer.getBoolean("showCamera");
 
         markersSign.forEach(marker -> marker.setVisible(showInfo));
         markersFree.forEach(marker -> marker.setVisible(showFree));
         markersModerate.forEach(marker -> marker.setVisible(showModerate));
         markersHeavy.forEach(marker -> marker.setVisible(showHeavy));
+        markersCamera.forEach(marker -> marker.setVisible(showCamera));
         polyHeavy.forEach(polyline -> polyline.setVisible(showHeavy));
         polyModerate.forEach(polyline -> polyline.setVisible(showModerate));
         polyFree.forEach(polyline -> polyline.setVisible(showFree));
