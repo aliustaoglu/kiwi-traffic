@@ -1,13 +1,8 @@
 package com.kiwitraffic.NativeModules.MapComponents;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
@@ -22,16 +17,12 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     private Context context;
-    Map<String, Boolean> alreadyLoadedMarkers = new HashMap<>();
+    String lastOpenedMarker = "";
 
     public MarkerInfoWindowAdapter(Context rctContext) {
         context = rctContext;
@@ -80,8 +71,8 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                     @Override
                     public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
                         Map<String, String> markerParams = (Map<String, String>)marker.getTag();
-                        if(alreadyLoadedMarkers.get(markerParams.get("imageUrl")) == null){
-                            alreadyLoadedMarkers.put(markerParams.get("imageUrl"), true);
+                        if(lastOpenedMarker != markerParams.get("imageUrl")){
+                            lastOpenedMarker = markerParams.get("imageUrl");
                             marker.hideInfoWindow();
                             marker.showInfoWindow();
                         }

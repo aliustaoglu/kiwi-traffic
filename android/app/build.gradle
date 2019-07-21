@@ -156,8 +156,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-base:16.1.0'
     implementation 'com.google.maps:google-maps-services:0.9.3'
 
-    implementation 'com.github.bumptech.glide:glide:4.5.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 }
 
 // Run this once to be able to run the application with BUCK
