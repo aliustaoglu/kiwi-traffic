@@ -1,11 +1,14 @@
 package com.kiwitraffic.NativeModules.MapComponents;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,17 +18,22 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.dylanvann.fastimage.GlideApp;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
+import com.kiwitraffic.NativeModules.Utils.WindowUtil;
+
 import java.util.Map;
 
 public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     private Context context;
-    String lastOpenedMarker = "";
+    private WindowUtil windowUtil;
+    private String lastOpenedMarker = "";
 
     public MarkerInfoWindowAdapter(Context rctContext) {
         context = rctContext;
+        windowUtil = new WindowUtil(context);
     }
 
     @Override
@@ -54,14 +62,11 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         if (marker.getTag() != null) {
             Map<String, String> markerParams = (Map<String, String>)marker.getTag();
             if (markerParams.get("markerType") == "camera"){
-                TextView abc = new TextView(context);
-                abc.setText(markerParams.get("thumbUrl"));
-                info.addView(abc);
-
+                DisplayMetrics displayMetrics = windowUtil.getDisplayMetrics();
                 ImageView imgCam = new ImageView(context);
-                imgCam.setLayoutParams(new LinearLayout.LayoutParams(500, 500));
+                int size = (int) Math.round(displayMetrics.widthPixels * 0.85);
+                imgCam.setLayoutParams(new LinearLayout.LayoutParams(size, size));
                 info.addView(imgCam);
-
                 RequestListener glideRequestListener = new RequestListener() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
@@ -75,13 +80,19 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                             lastOpenedMarker = markerParams.get("imageUrl");
                             marker.hideInfoWindow();
                             marker.showInfoWindow();
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Glide.get(context).clearDiskCache();
+                                }
+                            }).start();
                         }
                         return false;
                     }
                 };
-                Glide.with(context).load(markerParams.get("imageUrl")).listener(glideRequestListener).into(imgCam);
-                Boolean s = marker.isInfoWindowShown();
-
+                GlideApp.with(context).load(markerParams.get("imageUrl"))
+                        .listener(glideRequestListener)
+                        .into(imgCam);
             }
         }
 
