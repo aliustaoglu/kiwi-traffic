@@ -23,11 +23,15 @@ import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     private Context context;
+    Map<String, Boolean> alreadyLoadedMarkers = new HashMap<>();
 
     public MarkerInfoWindowAdapter(Context rctContext) {
         context = rctContext;
@@ -66,8 +70,27 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                 ImageView imgCam = new ImageView(context);
                 imgCam.setLayoutParams(new LinearLayout.LayoutParams(500, 500));
                 info.addView(imgCam);
-                Glide.with(context).load(markerParams.get("imageUrl")).into(imgCam);
-                imgCam.invalidate();
+
+                RequestListener glideRequestListener = new RequestListener() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
+                        Map<String, String> markerParams = (Map<String, String>)marker.getTag();
+                        if(alreadyLoadedMarkers.get(markerParams.get("imageUrl")) == null){
+                            alreadyLoadedMarkers.put(markerParams.get("imageUrl"), true);
+                            marker.hideInfoWindow();
+                            marker.showInfoWindow();
+                        }
+                        return false;
+                    }
+                };
+                Glide.with(context).load(markerParams.get("imageUrl")).listener(glideRequestListener).into(imgCam);
+                Boolean s = marker.isInfoWindowShown();
+
             }
         }
 

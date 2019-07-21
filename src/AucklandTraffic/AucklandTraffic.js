@@ -102,7 +102,7 @@ class AucklandTraffic extends React.Component {
     const xmlSigns = await axios.get(aucklandSigns, { headers: aucklandHeaders })
     const cameras = await axios.get(aucklandCameras, { headers: aucklandHeaders })
     const that = this
-    parseString(xmlAkl.data, function (err, result) {
+    /*parseString(xmlAkl.data, function (err, result) {
       const trafficData = getTrafficData(result)
       that.setState({ trafficData })
       const heavy = trafficData.traffic.filter(t => t.congestion === 'Heavy')
@@ -114,7 +114,7 @@ class AucklandTraffic extends React.Component {
       const signsData = getSignsData(result)
       const notEmptySigns = signsData.filter(sign => sign.message.length > 0)
       that.setState({ signsData: notEmptySigns })
-    })
+    })*/
     parseString(cameras.data, (err, result) => {
       const camsData = getCamsData(result)
       this.setState({ cameras: camsData })
