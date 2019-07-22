@@ -10,6 +10,7 @@ import { parseString } from 'react-native-xml2js'
 import { preRoutes } from '../assets/routes'
 import MapLegend from './MapLegend'
 import { path } from 'ramda'
+import MapModal from './MapModal';
 
 const getTrafficData = result => {
   const lastUpdated = result['tns:getTrafficConditionsResponse']['tns:trafficConditions'][0]['tns:lastUpdated']
@@ -98,9 +99,17 @@ class AucklandTraffic extends React.Component {
         free: []
       },
       signsData: [],
-      cameras: []
+      cameras: [],
+      markerInfoModal: false
     }
     this.onMapReady = this.onMapReady.bind(this)
+    this.onMarkerClick = this.onMarkerClick.bind(this)
+  }
+
+  onMarkerClick(e){
+    const event = e.nativeEvent;
+    
+    
   }
 
   async onMapReady () {
@@ -124,7 +133,6 @@ class AucklandTraffic extends React.Component {
     parseString(cameras.data, (err, result) => {
       const camsData = getCamsData(result)
       this.setState({ cameras: camsData })
-      console.log(camsData)
     })
   }
 
@@ -133,6 +141,7 @@ class AucklandTraffic extends React.Component {
   render () {
     return (
       <SafeAreaView style={{ height: '100%' }}>
+        <MapModal modalVisible={this.state.markerInfoModal} />
         <Layout style={{ height: '100%' }}>
           <MapView
             style={{ height: '90%' }}
@@ -141,9 +150,7 @@ class AucklandTraffic extends React.Component {
             latLng={this.state.latLng}
             zoom={12}
             onMapReady={this.onMapReady}
-            onMarkerClick={(a) => {
-              console.log(a.nativeEvent)
-            }}
+            onMarkerClick={this.onMarkerClick}
             signs={this.state.signsData}
             mapReducer={this.props.mapReducer}
             cameras={this.state.cameras}
