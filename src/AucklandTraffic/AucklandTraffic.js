@@ -79,6 +79,12 @@ const getCamsData = result => {
 }
 
 class AucklandTraffic extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      header: null
+    }
+  }
+
   constructor (props) {
     super(props)
     this.state = {

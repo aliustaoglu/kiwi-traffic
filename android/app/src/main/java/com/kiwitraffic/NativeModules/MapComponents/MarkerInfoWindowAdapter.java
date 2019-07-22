@@ -2,8 +2,10 @@ package com.kiwitraffic.NativeModules.MapComponents;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -41,6 +43,7 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         return null;
     }
 
+
     @Override
     public View getInfoContents(Marker marker) {
         LinearLayout info = new LinearLayout(context);
@@ -60,11 +63,12 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         info.addView(snippet);
 
         if (marker.getTag() != null) {
-            Map<String, String> markerParams = (Map<String, String>)marker.getTag();
-            if (markerParams.get("markerType") == "camera"){
+            Map<String, String> markerParams = (Map<String, String>) marker.getTag();
+            String imageUrl = markerParams.get("imageUrl");
+            if (markerParams.get("markerType") == "camera") {
                 DisplayMetrics displayMetrics = windowUtil.getDisplayMetrics();
                 ImageView imgCam = new ImageView(context);
-                int size = (int) Math.round(displayMetrics.widthPixels * 0.85);
+                int size = 640; //(int) Math.round(displayMetrics.widthPixels * 0.85);
                 imgCam.setLayoutParams(new LinearLayout.LayoutParams(size, size));
                 info.addView(imgCam);
                 RequestListener glideRequestListener = new RequestListener() {
@@ -75,11 +79,13 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
                     @Override
                     public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
-                        Map<String, String> markerParams = (Map<String, String>)marker.getTag();
-                        if(lastOpenedMarker != markerParams.get("imageUrl")){
-                            lastOpenedMarker = markerParams.get("imageUrl");
+                        Map<String, String> markerParams = (Map<String, String>) marker.getTag();
+                        if (lastOpenedMarker != imageUrl) {
+                            lastOpenedMarker = imageUrl;
                             marker.hideInfoWindow();
                             marker.showInfoWindow();
+                            Bitmap imgBitmap = ((BitmapDrawable) resource).getBitmap();
+                            //imgCam.refreshDrawableState();
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -91,6 +97,7 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                     }
                 };
                 GlideApp.with(context).load(markerParams.get("imageUrl"))
+                        .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                         .listener(glideRequestListener)
                         .into(imgCam);
             }

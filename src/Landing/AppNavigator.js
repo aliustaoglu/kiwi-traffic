@@ -3,6 +3,7 @@ import LandingTabs from './LandingTabs';
 import { View, Text } from 'react-native'
 import AucklandTraffic from '../AucklandTraffic/AucklandTraffic';
 import { infoConnectUser } from 'react-native-dotenv'
+import CameraDetail from '../AucklandTraffic/CameraDetail';
 
 const StackNavigator = createStackNavigator(
   {
@@ -11,6 +12,9 @@ const StackNavigator = createStackNavigator(
     },
     AucklandTraffic: {
       screen: AucklandTraffic
+    },
+    CameraDetail: {
+      screen: CameraDetail
     }
   },
   {
