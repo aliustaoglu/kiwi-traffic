@@ -32,7 +32,10 @@ import com.google.maps.android.PolyUtil;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.EncodedPolyline;
 import com.google.maps.model.TravelMode;
+import com.kiwitraffic.NativeModules.MapComponents.MarkerClickListener;
 import com.kiwitraffic.NativeModules.MapComponents.MarkerInfoWindowAdapter;
+import com.kiwitraffic.NativeModules.Utils.ReactUtil;
+import com.kiwitraffic.NativeModules.enums.TrafficTypes;
 
 import org.json.JSONObject;
 
@@ -49,6 +52,7 @@ public class GMapAuckland extends MapView {
     private AssetManager assetManager;
     private ReadableMap existingRoutes;
     private ReadableMap mapReducer;
+    private ReactUtil reactUtil;
 
     private List<Marker> markersSign = new ArrayList<>();
     private List<Marker> markersFree = new ArrayList<>();
@@ -81,11 +85,22 @@ public class GMapAuckland extends MapView {
     public GMapAuckland(Context context) {
         super(context);
         assetManager = context.getAssets();
+        reactUtil = new ReactUtil(context, this.getId());
 
         this.getMapAsync(gMap -> {
             googleMap = gMap;
-            GoogleMap.InfoWindowAdapter infoW = new MarkerInfoWindowAdapter(getContext());
-            googleMap.setInfoWindowAdapter(infoW);
+            reactNativeEvent("onMapReady", null);
+            gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    if (marker.getTag() != null) {
+                        reactNativeEvent("onMarkerClick", composeMarkerEventParams(marker));
+                    }
+                    return false;
+                }
+            });
+            //GoogleMap.InfoWindowAdapter infoW = new MarkerInfoWindowAdapter(getContext());
+            //googleMap.setInfoWindowAdapter(infoW);
         });
         try {
             ApplicationInfo app = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
@@ -106,7 +121,6 @@ public class GMapAuckland extends MapView {
     public void setZoom(int zoom) {
         this.getMapAsync(gMap -> {
             gMap.moveCamera(CameraUpdateFactory.zoomTo(zoom));
-            reactNativeEvent("onMapReady", "");
         });
     }
 
@@ -164,8 +178,15 @@ public class GMapAuckland extends MapView {
             if (trafficType != "free") {
                 BitmapDescriptor img = getIcon("img/traffic-" + trafficType + ".png");
                 MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(new LatLng(startLat, startLon)).icon(img).title(title).snippet(inOut + "bound : " + trafficType + " traffic");
+                markerOptions.position(new LatLng(startLat, startLon)).icon(img);//.title(title).snippet(inOut + "bound : " + trafficType + " traffic");
                 Marker markerTraffic = googleMap.addMarker(markerOptions);
+                Map<String, String> markerTrafficTags = new HashMap<>();
+                markerTrafficTags.put("markerType", "traffic");
+                markerTrafficTags.put("trafficType", trafficType);
+                markerTrafficTags.put("title", title);
+                markerTrafficTags.put("inOut", inOut);
+                markerTraffic.setTag(markerTrafficTags);
+
                 if (trafficType == "moderate") markersModerate.add(markerTraffic);
                 if (trafficType == "heavy") markersHeavy.add(markerTraffic);
             }
@@ -204,9 +225,15 @@ public class GMapAuckland extends MapView {
                 BitmapDescriptor img = getIcon("img/info.png");
 
                 MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(new LatLng(lat, lon)).title(name).icon(img).snippet(message);
+                markerOptions.position(new LatLng(lat, lon)).icon(img);//.title(name).snippet(message);
                 Marker signMarker = gMap.addMarker(markerOptions);
                 markersSign.add(signMarker);
+
+                Map<String, String> signMarkerTags = new HashMap<>();
+                signMarkerTags.put("markerType", "sign");
+                signMarkerTags.put("name", name);
+                signMarkerTags.put("message", message);
+                signMarker.setTag(signMarkerTags);
             }
         });
 
@@ -229,11 +256,11 @@ public class GMapAuckland extends MapView {
 
             MarkerOptions markerOptions = new MarkerOptions();
             BitmapDescriptor img = getIcon("img/traffic-cams.png");
-            markerOptions.position(new LatLng(camLat, camLon)).title(camName).snippet(camDescription).icon(img);
+            markerOptions.position(new LatLng(camLat, camLon)).icon(img);//.title(camName).snippet(camDescription);
 
             Marker camMarker = googleMap.addMarker(markerOptions);
             markersCamera.add(camMarker);
-            Map<String, String > camObject = new HashMap<>();
+            Map<String, String> camObject = new HashMap<>();
             camObject.put("markerType", "camera");
             camObject.put("thumbUrl", thumbUrl);
             camObject.put("imageUrl", imageUrl);
@@ -259,13 +286,18 @@ public class GMapAuckland extends MapView {
         polyFree.forEach(polyline -> polyline.setVisible(showFree));
     }
 
-    private void reactNativeEvent(String eventName, String message) {
-        WritableMap event = Arguments.createMap();
-        event.putString("message", message);
+    private WritableMap composeMarkerEventParams(Marker marker) {
+        HashMap<String, String> tags = ((HashMap<String, String>) marker.getTag());
+        WritableMap eventParams = Arguments.createMap();
+        tags.forEach((name, val) -> eventParams.putString(name, val));
+        return eventParams;
+    }
+
+    private void reactNativeEvent(String eventName, WritableMap eventParams) {
         ReactContext reactContext = (ReactContext) this.getContext();
         reactContext
                 .getJSModule(RCTEventEmitter.class)
-                .receiveEvent(this.getId(), eventName, event);
+                .receiveEvent(this.getId(), eventName, eventParams);
     }
 
 

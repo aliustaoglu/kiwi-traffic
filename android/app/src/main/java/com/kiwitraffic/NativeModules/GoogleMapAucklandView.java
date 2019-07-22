@@ -80,6 +80,7 @@ public class GoogleMapAucklandView extends SimpleViewManager<View> {
     @Override
     public Map getExportedCustomBubblingEventTypeConstants() {
         return MapBuilder.builder().put("onMapReady", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onMapReady")))
+                .put("onMarkerClick", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onMarkerClick")))
                 .build();
     }
 

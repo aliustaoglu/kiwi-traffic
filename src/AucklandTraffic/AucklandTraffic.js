@@ -141,6 +141,9 @@ class AucklandTraffic extends React.Component {
             latLng={this.state.latLng}
             zoom={12}
             onMapReady={this.onMapReady}
+            onMarkerClick={(a) => {
+              console.log(a.nativeEvent)
+            }}
             signs={this.state.signsData}
             mapReducer={this.props.mapReducer}
             cameras={this.state.cameras}
