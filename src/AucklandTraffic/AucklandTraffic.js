@@ -100,7 +100,8 @@ class AucklandTraffic extends React.Component {
       },
       signsData: [],
       cameras: [],
-      markerInfoModal: false
+      markerInfoModal: false,
+      markerProps: {}
     }
     this.onMapReady = this.onMapReady.bind(this)
     this.onMarkerClick = this.onMarkerClick.bind(this)
@@ -108,7 +109,7 @@ class AucklandTraffic extends React.Component {
 
   onMarkerClick(e){
     const event = e.nativeEvent;
-    
+    this.setState({markerInfoModal: true, markerProps: event})
     
   }
 
@@ -141,7 +142,7 @@ class AucklandTraffic extends React.Component {
   render () {
     return (
       <SafeAreaView style={{ height: '100%' }}>
-        <MapModal modalVisible={this.state.markerInfoModal} />
+        <MapModal markerProps={this.state.markerProps} modalVisible={this.state.markerInfoModal} />
         <Layout style={{ height: '100%' }}>
           <MapView
             style={{ height: '90%' }}

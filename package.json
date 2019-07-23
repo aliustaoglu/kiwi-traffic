@@ -38,6 +38,7 @@
     "@babel/core": "^7.4.5",
     "@babel/runtime": "^7.4.5",
     "babel-jest": "^24.8.0",
+    "babel-plugin-jsx-control-statements": "^4.0.0",
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.55.0",
     "react-native-debugger-open": "^0.3.19",
