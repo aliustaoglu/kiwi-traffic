@@ -58,3 +58,4 @@ release/
 Pods/
 builds/
 .env
+.scannerwork
