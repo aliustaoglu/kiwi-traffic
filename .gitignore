@@ -59,3 +59,4 @@ Pods/
 builds/
 .env
 .scannerwork
+*.bundle

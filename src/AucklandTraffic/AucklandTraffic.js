@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { Layout, Text } from 'react-native-ui-kitten'
+import { Layout } from 'react-native-ui-kitten'
 import { SafeAreaView } from 'react-navigation'
 import MapView from '../Map/MapView'
 import axios from 'axios'
