@@ -22,7 +22,7 @@ const Title = styled.Text`
   background-color: ${darkColours['color-warning-default']};
 `
 
-const MapModal = ({ modalVisible, markerProps, onClose }) => {
+const CameraModal = ({ modalVisible, markerProps, onClose }) => {
   const dims = Dimensions.get('screen')
   const [size, setSize] = useState({ height: 1, width: 1 })
 
@@ -46,4 +46,4 @@ const MapModal = ({ modalVisible, markerProps, onClose }) => {
   )
 }
 
-export default MapModal
+export default CameraModal
