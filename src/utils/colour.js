@@ -1,4 +1,4 @@
-const darkBasic = {
+export const darkBasic = {
   'color-basic-100': '#FFFFFF',
   'color-basic-200': '#F7F9FC',
   'color-basic-300': '#EDF1F7',

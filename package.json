@@ -40,7 +40,7 @@
     "babel-jest": "^24.8.0",
     "babel-plugin-jsx-control-statements": "^4.0.0",
     "jest": "^24.8.0",
-    "metro-react-native-babel-preset": "^0.55.0",
+    "metro-react-native-babel-preset": "^0.54.1",
     "react-native-debugger-open": "^0.3.19",
     "react-test-renderer": "16.8.3"
   },

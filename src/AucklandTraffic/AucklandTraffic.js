@@ -10,7 +10,7 @@ import { parseString } from 'react-native-xml2js'
 import { preRoutes } from '../assets/routes'
 import MapLegend from './MapLegend'
 import { path } from 'ramda'
-import MapModal from './MapModal';
+import MapModal from './MapModal'
 
 const getTrafficData = result => {
   const lastUpdated = result['tns:getTrafficConditionsResponse']['tns:trafficConditions'][0]['tns:lastUpdated']
@@ -107,10 +107,9 @@ class AucklandTraffic extends React.Component {
     this.onMarkerClick = this.onMarkerClick.bind(this)
   }
 
-  onMarkerClick(e){
-    const event = e.nativeEvent;
-    this.setState({markerInfoModal: true, markerProps: event})
-    
+  onMarkerClick (e) {
+    const event = e.nativeEvent
+    this.setState({ markerInfoModal: true, markerProps: event })
   }
 
   async onMapReady () {
@@ -142,7 +141,7 @@ class AucklandTraffic extends React.Component {
   render () {
     return (
       <SafeAreaView style={{ height: '100%' }}>
-        <MapModal markerProps={this.state.markerProps} modalVisible={this.state.markerInfoModal} />
+        <MapModal markerProps={this.state.markerProps} modalVisible={this.state.markerInfoModal} onClose={() => this.setState({ markerInfoModal: false })} />
         <Layout style={{ height: '100%' }}>
           <MapView
             style={{ height: '90%' }}
