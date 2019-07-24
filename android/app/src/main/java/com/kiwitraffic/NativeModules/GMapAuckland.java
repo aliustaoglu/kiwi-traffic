@@ -178,7 +178,7 @@ public class GMapAuckland extends MapView {
             if (trafficType != "free") {
                 BitmapDescriptor img = getIcon("img/traffic-" + trafficType + ".png");
                 MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(new LatLng(startLat, startLon)).icon(img);//.title(title).snippet(inOut + "bound : " + trafficType + " traffic");
+                markerOptions.position(new LatLng(startLat, startLon)).icon(img).title(title).snippet(inOut + "bound : " + trafficType + " traffic");
                 Marker markerTraffic = googleMap.addMarker(markerOptions);
                 Map<String, String> markerTrafficTags = new HashMap<>();
                 markerTrafficTags.put("markerType", "traffic");
@@ -225,7 +225,7 @@ public class GMapAuckland extends MapView {
                 BitmapDescriptor img = getIcon("img/info.png");
 
                 MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(new LatLng(lat, lon)).icon(img);//.title(name).snippet(message);
+                markerOptions.position(new LatLng(lat, lon)).icon(img).title(name).snippet(message.replaceAll("\\[nl\\]", " "));
                 Marker signMarker = gMap.addMarker(markerOptions);
                 markersSign.add(signMarker);
 

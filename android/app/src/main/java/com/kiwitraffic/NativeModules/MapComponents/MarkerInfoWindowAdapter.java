@@ -85,7 +85,6 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                             marker.hideInfoWindow();
                             marker.showInfoWindow();
                             Bitmap imgBitmap = ((BitmapDrawable) resource).getBitmap();
-                            //imgCam.refreshDrawableState();
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
