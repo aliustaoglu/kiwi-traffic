@@ -1,6 +1,5 @@
 package com.kiwitraffic.NativeModules.MapComponents;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -10,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;

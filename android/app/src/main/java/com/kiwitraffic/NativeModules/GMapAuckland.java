@@ -32,13 +32,8 @@ import com.google.maps.android.PolyUtil;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.EncodedPolyline;
 import com.google.maps.model.TravelMode;
-import com.kiwitraffic.NativeModules.MapComponents.MarkerClickListener;
-import com.kiwitraffic.NativeModules.MapComponents.MarkerInfoWindowAdapter;
 import com.kiwitraffic.NativeModules.Utils.ReactUtil;
-import com.kiwitraffic.NativeModules.enums.TrafficTypes;
-
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;

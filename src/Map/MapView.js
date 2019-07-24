@@ -1,5 +1,5 @@
 import React from 'react'
-import { requireNativeComponent, View, Text, StyleSheet } from 'react-native'
+import { requireNativeComponent } from 'react-native'
 
 const GoogleMapAucklandView = requireNativeComponent('GoogleMapAucklandView')
 class MapView extends React.Component {

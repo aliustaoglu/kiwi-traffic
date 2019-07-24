@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { View, Image, Button, Text, Dimensions } from 'react-native'
-import { TouchableHighlight } from 'react-native-gesture-handler'
+import React, { useState } from 'react'
+import { View, Image, Button, Dimensions } from 'react-native'
 import Modal from 'react-native-modal'
 import styled from 'styled-components/native'
 import { darkColours, darkBasic } from '../utils/colour'

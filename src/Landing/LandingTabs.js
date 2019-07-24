@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
-import { Layout, Text, Button, TopNavigation, BottomNavigation, BottomNavigationTab } from 'react-native-ui-kitten';
+import { Layout, Text, BottomNavigation, BottomNavigationTab } from 'react-native-ui-kitten';
 import { createBottomTabNavigator } from 'react-navigation';
 import LandingView from './LandingView';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const BottomBar = props => {
   const routes = props.navigation.state.routes;

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components/native'
-import { Layout, Text } from 'react-native-ui-kitten'
+import { Layout } from 'react-native-ui-kitten'
 import Image from 'react-native-fast-image'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { setShowHeavy, setShowModerate, setShowFree, setShowInfo, setShowCamera } from '../redux/reducers/mapReducer'

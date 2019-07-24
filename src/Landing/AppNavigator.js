@@ -1,6 +1,5 @@
-import { createAppContainer, createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createAppContainer, createStackNavigator } from 'react-navigation';
 import LandingTabs from './LandingTabs';
-import { View, Text } from 'react-native'
 import AucklandTraffic from '../AucklandTraffic/AucklandTraffic';
 import { infoConnectUser } from 'react-native-dotenv'
 import CameraDetail from '../AucklandTraffic/CameraDetail';

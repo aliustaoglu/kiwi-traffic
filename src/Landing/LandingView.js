@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Text, Button, TopNavigation, BottomNavigation } from 'react-native-ui-kitten';
+import { Layout, TopNavigation } from 'react-native-ui-kitten';
 import { ScrollView, SafeAreaView } from 'react-native';
 import { darkColours } from '../utils/colour';
 import styled from 'styled-components/native';
