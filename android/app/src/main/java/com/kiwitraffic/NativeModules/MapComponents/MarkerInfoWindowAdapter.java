@@ -65,7 +65,7 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         if (marker.getTag() != null) {
             Map<String, String> markerParams = (Map<String, String>) marker.getTag();
             String imageUrl = markerParams.get("imageUrl");
-            if (markerParams.get("markerType") == "camera") {
+            if (markerParams.get("markerType").equals("camera")) {
                 DisplayMetrics displayMetrics = windowUtil.getDisplayMetrics();
                 ImageView imgCam = new ImageView(context);
                 int size = 640; //(int) Math.round(displayMetrics.widthPixels * 0.85);
@@ -80,7 +80,7 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                     @Override
                     public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
                         Map<String, String> markerParams = (Map<String, String>) marker.getTag();
-                        if (lastOpenedMarker != imageUrl) {
+                        if (!lastOpenedMarker.equals(imageUrl) ) {
                             lastOpenedMarker = imageUrl;
                             marker.hideInfoWindow();
                             marker.showInfoWindow();

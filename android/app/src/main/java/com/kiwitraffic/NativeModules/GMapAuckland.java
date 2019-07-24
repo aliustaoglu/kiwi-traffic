@@ -145,6 +145,7 @@ public class GMapAuckland extends MapView {
         double endLon = Double.parseDouble(route.getString("endLon"));
         String title = route.getString("name");
         String inOut = route.getString("inOut");
+        String routeId = route.getString("id");
         DirectionsApiRequest req = DirectionsApi.newRequest(geoApi);
         com.google.maps.model.LatLng start = new com.google.maps.model.LatLng();
         com.google.maps.model.LatLng end = new com.google.maps.model.LatLng();
@@ -152,11 +153,17 @@ public class GMapAuckland extends MapView {
         start.lng = startLon;
         end.lat = endLat;
         end.lng = endLon;
+        // Harbour Bridge has 2 instances (Workaround for this)
+        // TO-DO Use ID instead of names
+        if (title.equals("Harbour Bridge")) {
+            title = title + routeId;
+        }
         try {
-            String encodedPolyline = "";
+            String encodedPolyline;
 
             if (existingRoutes.hasKey(title)) {
                 encodedPolyline = existingRoutes.getString(title);
+                if (title.contains("Harbour Bridge")) title = "Harbour Bridge"; //TO-DO: see above
             } else {
                 DirectionsResult result = req.origin(start).destination(end).mode(TravelMode.DRIVING).await();
                 EncodedPolyline overviewPolyline = result.routes[0].overviewPolyline;
@@ -169,13 +176,13 @@ public class GMapAuckland extends MapView {
             for (int i = 0; i < points.size(); i++) {
                 polyOptions.add(points.get(i));
             }
-            int lineWidth = trafficType == "free" ? 6 : 12;
+            int lineWidth = trafficType.equals("free") ? 6 : 12;
             polyOptions.width(lineWidth).color(color);
 
             Polyline poly = googleMap.addPolyline(polyOptions);
             pushPolylineList(poly, trafficType);
 
-            if (trafficType != "free") {
+            if (!trafficType.equals("free")) {
                 BitmapDescriptor img = getIcon("img/traffic-" + trafficType + ".png");
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(new LatLng(startLat, startLon)).icon(img).title(title).snippet(inOut + "bound : " + trafficType + " traffic");
@@ -187,8 +194,8 @@ public class GMapAuckland extends MapView {
                 markerTrafficTags.put("inOut", inOut);
                 markerTraffic.setTag(markerTrafficTags);
 
-                if (trafficType == "moderate") markersModerate.add(markerTraffic);
-                if (trafficType == "heavy") markersHeavy.add(markerTraffic);
+                if (trafficType.equals("moderate")) markersModerate.add(markerTraffic);
+                if (trafficType.equals("heavy")) markersHeavy.add(markerTraffic);
             }
 
             JSONObject jo = new JSONObject();
