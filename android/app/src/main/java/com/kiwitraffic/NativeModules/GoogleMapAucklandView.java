@@ -6,7 +6,6 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
-import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.google.android.gms.maps.MapView;
@@ -16,7 +15,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class GoogleMapAucklandView extends SimpleViewManager<View> {
+public class GoogleMapAucklandView extends GenericMapViewController {
     private GMapAuckland mapView;
     private ReactContext rctContext;
 
@@ -33,16 +32,6 @@ public class GoogleMapAucklandView extends SimpleViewManager<View> {
         mapView.onCreate(null);
         mapView.onResume();
         return mapView;
-    }
-
-    @ReactProp(name = "latLng")
-    public void setLatLng(MapView view, @Nullable ReadableMap coords) {
-        mapView.setLatLng(coords.getDouble("lat"), coords.getDouble("lng"));
-    }
-
-    @ReactProp(name = "zoom")
-    public void setZoom(MapView view, @Nullable Integer zoom) {
-        mapView.setZoom(zoom);
     }
 
     @ReactProp(name = "polylines")
