@@ -29,15 +29,16 @@ const SubTitle = styled(Title)`
 const CameraModal = ({ modalVisible, markerProps, onClose }) => {
   const dims = Dimensions.get('screen')
   const [size, setSize] = useState({ height: 1, width: 1 })
-  const ratio = (dims.width * 0.9) / size.width
 
-  const dateStr = new Date().toISOString().substr(0, 16) // cache no longer than for 1 min
+  let dateStr = ''
   const onImageLoad = e => {
-    if (size.width === 1) {
-      setSize({ height: e.nativeEvent.source.height, width: e.nativeEvent.source.width })
-    }
+      setSize({ height: e.nativeEvent.source.height, width: e.nativeEvent.source.width })   
+      dateStr = new Date().toISOString().substr(0, 16) // cache no longer than for 1 min
   }
-  console.log(dateStr)
+
+  // Scaled width and height
+  const width = dims.width * 0.9
+  const height = (dims.width * 0.9 * size.height) / size.width
   return (
     <Modal swipeDirection='down' onSwipeComplete={onClose} backdropOpacity={0.5} isVisible={modalVisible} style={{ flex: 0, width: '90%', backgroundColor: '#fff' }}>
       <View>
@@ -47,7 +48,7 @@ const CameraModal = ({ modalVisible, markerProps, onClose }) => {
         <View>
           <SubTitle>{markerProps.description}</SubTitle>
         </View>
-        <Image style={{ width: size.width * ratio, height: size.height * ratio }} onLoad={onImageLoad} source={{ uri: markerProps.imageUrl + '?' + dateStr }} />
+        <Image style={{ width, height  }} onLoad={onImageLoad} source={{ uri: markerProps.imageUrl + '?' + dateStr }} />
       </View>
       <Button onPress={onClose} title='Close' />
     </Modal>

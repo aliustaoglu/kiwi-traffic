@@ -62,9 +62,6 @@ public class GMapAuckland extends MapView {
     private List<Polyline> polyModerate = new ArrayList<>();
     private List<Polyline> polyHeavy = new ArrayList<>();
 
-
-    List<JSONObject> jsList = new ArrayList<>();
-
     private BitmapDescriptor getIcon(String fileName, int width) {
         BitmapDescriptor img = null;
         try {
@@ -146,6 +143,10 @@ public class GMapAuckland extends MapView {
         double startLon = Double.parseDouble(route.getString("startLon"));
         double endLat = Double.parseDouble(route.getString("endLat"));
         double endLon = Double.parseDouble(route.getString("endLon"));
+        Boolean showFree = mapReducer.getBoolean("showFree");
+        Boolean showModerate = mapReducer.getBoolean("showModerate");
+        Boolean showHeavy = mapReducer.getBoolean("showHeavy");
+
         String title = route.getString("name");
         String inOut = route.getString("inOut");
         String routeId = route.getString("id");
@@ -183,6 +184,7 @@ public class GMapAuckland extends MapView {
             polyOptions.width(lineWidth).color(color);
 
             Polyline poly = googleMap.addPolyline(polyOptions);
+            if (trafficType.equals("free") && !showFree) poly.setVisible(false);
             pushPolylineList(poly, trafficType);
 
             if (!trafficType.equals("free")) {
@@ -201,9 +203,6 @@ public class GMapAuckland extends MapView {
                 if (trafficType.equals("heavy")) markersHeavy.add(markerTraffic);
             }
 
-            JSONObject jo = new JSONObject();
-            jo.put(title, encodedPolyline);
-            jsList.add(jo);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -214,23 +213,20 @@ public class GMapAuckland extends MapView {
         ReadableArray heavyArray = polylines.getArray("heavy");
         ReadableArray freeArray = polylines.getArray("free");
 
-        if (mapReducer.getBoolean("showFree"))
-            for (int i = 0; i < freeArray.size(); i++) {
-                setSingleRoute(freeArray.getMap(i), "free", Color.rgb(0, 255, 0));
-            }
-        if (mapReducer.getBoolean("showModerate"))
-            for (int i = 0; i < moderateArray.size(); i++) {
-                setSingleRoute(moderateArray.getMap(i), "moderate", Color.rgb(255, 165, 0));
-            }
-        if (mapReducer.getBoolean("showHeavy"))
-            for (int i = 0; i < heavyArray.size(); i++) {
-                setSingleRoute(heavyArray.getMap(i), "heavy", Color.RED);
-            }
+        for (int i = 0; i < freeArray.size(); i++) {
+            setSingleRoute(freeArray.getMap(i), "free", Color.rgb(0, 255, 0));
+        }
+
+        for (int i = 0; i < moderateArray.size(); i++) {
+            setSingleRoute(moderateArray.getMap(i), "moderate", Color.rgb(255, 165, 0));
+        }
+
+        for (int i = 0; i < heavyArray.size(); i++) {
+            setSingleRoute(heavyArray.getMap(i), "heavy", Color.RED);
+        }
     }
 
     public void setSigns(ReadableArray signs) {
-        if (!mapReducer.getBoolean("showInfo")) return;
-
         for (int i = 0; i < signs.size(); i++) {
             String message = signs.getMap(i).getString("message");
             String name = signs.getMap(i).getString("name");
@@ -242,6 +238,7 @@ public class GMapAuckland extends MapView {
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(new LatLng(lat, lon)).icon(img).title(name).snippet(message.replaceAll("\\[nl\\]", " "));
             Marker signMarker = googleMap.addMarker(markerOptions);
+            signMarker.setVisible(mapReducer.getBoolean("showInfo"));
             markersSign.add(signMarker);
 
             Map<String, String> signMarkerTags = new HashMap<>();
@@ -257,7 +254,6 @@ public class GMapAuckland extends MapView {
     }
 
     public void setCameras(ReadableArray cameras) {
-        if (mapReducer != null && !mapReducer.getBoolean("showCamera")) return;
         for (int i = 0; i < cameras.size(); i++) {
             String camDescription = cameras.getMap(i).getString("description");
             String camName = cameras.getMap(i).getString("name");
