@@ -21,6 +21,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -33,7 +34,10 @@ import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.EncodedPolyline;
 import com.google.maps.model.TravelMode;
 import com.kiwitraffic.NativeModules.Utils.ReactUtil;
+import com.kiwitraffic.R;
+
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,6 +98,10 @@ public class GMapAuckland extends MapView {
                     return false;
                 }
             });
+            googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(context, R.raw.night_vision));
+            //gMap.setMapStyle()
+
             //GoogleMap.InfoWindowAdapter infoW = new MarkerInfoWindowAdapter(getContext());
             //googleMap.setInfoWindowAdapter(infoW);
         });
@@ -205,40 +213,43 @@ public class GMapAuckland extends MapView {
         ReadableArray moderateArray = polylines.getArray("moderate");
         ReadableArray heavyArray = polylines.getArray("heavy");
         ReadableArray freeArray = polylines.getArray("free");
-        for (int i = 0; i < freeArray.size(); i++) {
-            setSingleRoute(freeArray.getMap(i), "free", Color.rgb(0, 255, 0));
-        }
-        for (int i = 0; i < moderateArray.size(); i++) {
-            setSingleRoute(moderateArray.getMap(i), "moderate", Color.rgb(255, 165, 0));
-        }
-        for (int i = 0; i < heavyArray.size(); i++) {
-            setSingleRoute(heavyArray.getMap(i), "heavy", Color.RED);
-        }
+
+        if (mapReducer.getBoolean("showFree"))
+            for (int i = 0; i < freeArray.size(); i++) {
+                setSingleRoute(freeArray.getMap(i), "free", Color.rgb(0, 255, 0));
+            }
+        if (mapReducer.getBoolean("showModerate"))
+            for (int i = 0; i < moderateArray.size(); i++) {
+                setSingleRoute(moderateArray.getMap(i), "moderate", Color.rgb(255, 165, 0));
+            }
+        if (mapReducer.getBoolean("showHeavy"))
+            for (int i = 0; i < heavyArray.size(); i++) {
+                setSingleRoute(heavyArray.getMap(i), "heavy", Color.RED);
+            }
     }
 
     public void setSigns(ReadableArray signs) {
-        this.getMapAsync(gMap -> {
-            for (int i = 0; i < signs.size(); i++) {
-                String message = signs.getMap(i).getString("message");
-                String name = signs.getMap(i).getString("name");
-                Double lat = Double.parseDouble(signs.getMap(i).getString("lat"));
-                Double lon = Double.parseDouble(signs.getMap(i).getString("lon"));
+        if (!mapReducer.getBoolean("showInfo")) return;
 
-                BitmapDescriptor img = getIcon("img/info.png");
+        for (int i = 0; i < signs.size(); i++) {
+            String message = signs.getMap(i).getString("message");
+            String name = signs.getMap(i).getString("name");
+            Double lat = Double.parseDouble(signs.getMap(i).getString("lat"));
+            Double lon = Double.parseDouble(signs.getMap(i).getString("lon"));
 
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(new LatLng(lat, lon)).icon(img).title(name).snippet(message.replaceAll("\\[nl\\]", " "));
-                Marker signMarker = gMap.addMarker(markerOptions);
-                markersSign.add(signMarker);
+            BitmapDescriptor img = getIcon("img/info.png");
 
-                Map<String, String> signMarkerTags = new HashMap<>();
-                signMarkerTags.put("markerType", "sign");
-                signMarkerTags.put("name", name);
-                signMarkerTags.put("message", message);
-                signMarker.setTag(signMarkerTags);
-            }
-        });
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(new LatLng(lat, lon)).icon(img).title(name).snippet(message.replaceAll("\\[nl\\]", " "));
+            Marker signMarker = googleMap.addMarker(markerOptions);
+            markersSign.add(signMarker);
 
+            Map<String, String> signMarkerTags = new HashMap<>();
+            signMarkerTags.put("markerType", "sign");
+            signMarkerTags.put("name", name);
+            signMarkerTags.put("message", message);
+            signMarker.setTag(signMarkerTags);
+        }
     }
 
     public void setPreRoutes(ReadableMap preRoutes) {
@@ -246,7 +257,7 @@ public class GMapAuckland extends MapView {
     }
 
     public void setCameras(ReadableArray cameras) {
-
+        if (mapReducer != null && !mapReducer.getBoolean("showCamera")) return;
         for (int i = 0; i < cameras.size(); i++) {
             String camDescription = cameras.getMap(i).getString("description");
             String camName = cameras.getMap(i).getString("name");

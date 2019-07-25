@@ -21,7 +21,6 @@ const Title = styled.Text`
 `
 
 const SubTitle = styled(Title)`
-  
   font-size: 12px;
   font-weight: 400;
   background-color: ${darkBasic['color-warning-100']};
@@ -40,7 +39,7 @@ const CameraModal = ({ modalVisible, markerProps, onClose }) => {
   }
   console.log(dateStr)
   return (
-    <Modal backdropOpacity={0.5} isVisible={modalVisible} style={{ flex: 0, width: '90%', backgroundColor: '#fff' }}>
+    <Modal swipeDirection='down' onSwipeComplete={onClose} backdropOpacity={0.5} isVisible={modalVisible} style={{ flex: 0, width: '90%', backgroundColor: '#fff' }}>
       <View>
         <Header>
           <Title>{markerProps.name}</Title>

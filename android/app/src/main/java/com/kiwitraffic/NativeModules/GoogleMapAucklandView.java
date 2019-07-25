@@ -54,7 +54,7 @@ public class GoogleMapAucklandView extends SimpleViewManager<View> {
 
     @ReactProp(name = "signs")
     public void setSigns(MapView view, @Nullable ReadableArray signs) {
-        mapView.setSigns(signs);
+        view.getMapAsync(gmap -> mapView.setSigns(signs));
     }
 
     @ReactProp(name = "preRoutes")
@@ -66,9 +66,9 @@ public class GoogleMapAucklandView extends SimpleViewManager<View> {
 
     @ReactProp(name = "mapReducer")
     public void setMapReducer(MapView view, @Nullable ReadableMap mapReducer) {
-        view.getMapAsync(gMap -> {
+
             mapView.setMapReducer(mapReducer);
-        });
+
     }
 
     @ReactProp(name = "cameras")

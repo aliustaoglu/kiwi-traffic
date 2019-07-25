@@ -19,7 +19,7 @@ export const setShowCamera = createAction(MAP_ACTIONS.SET_SHOW_CAMERA)
 
 const initialState = {
   isProgress: false,
-  showInfo: true,
+  showInfo: false,
   showHeavy: true,
   showModerate: true,
   showFree: false,

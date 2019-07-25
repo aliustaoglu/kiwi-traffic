@@ -11,7 +11,7 @@
     "debugger-open": "rndebugger-open --port 8081",
     "watchman-clear": "watchman watch-del-all && rm -rf node_modules/ && yarn cache clean && yarn install",
     "install-apk": "adb install android/app/release/app-release.apk",
-    "uninstall-apk": "adb uninstall doctor.surf.report",
+    "uninstall-apk": "adb uninstall com.kiwitraffic",
     "reinstall-apk": "npm run uninstall-apk && npm run install-apk",
     "build-ios": "cd ios && xcodebuild -workspace kiwiTraffic.xcworkspace -scheme kiwiTraffic  -configuration Release SYMROOT=/Builds/ios/kiwiTraffic"
   },
