@@ -6,6 +6,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.kiwitraffic.NativeModules.GoogleMapAucklandView;
 import com.kiwitraffic.NativeModules.NavigatorView;
+import com.kiwitraffic.NativeModules.TreisMapViewController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +29,8 @@ public class NativePackages implements ReactPackage {
     public List<ViewManager> createViewManagers(@Nonnull ReactApplicationContext reactContext) {
         return Arrays.<ViewManager>asList(
                 new NavigatorView(),
-                new GoogleMapAucklandView()
+                new GoogleMapAucklandView(),
+                new TreisMapViewController()
         );
     }
 }

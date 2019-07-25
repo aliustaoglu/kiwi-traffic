@@ -27,7 +27,7 @@ class LandingView extends React.Component {
             <Wrapper>
               <ImageCard image={auckland} text="Auckland Traffic" routeName="AucklandTraffic" />
               <ImageCard image={christchurch} text="Christchurch Traffic" />
-              <ImageCard image={highway} text="Highway Traffic" />
+              <ImageCard image={highway} text="Highway Traffic" routeName="Treis" />
               <ImageCard image={camera} text="Traffic Cams" />
             </Wrapper>
           </ScrollView>

@@ -36,8 +36,6 @@ import com.google.maps.model.TravelMode;
 import com.kiwitraffic.NativeModules.Utils.ReactUtil;
 import com.kiwitraffic.R;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class GMapAuckland extends MapView {
+public class GMapAuckland extends GenericMap {
     public GoogleMap googleMap;
     private GeoApiContext geoApi;
     private AssetManager assetManager;
@@ -112,17 +110,7 @@ public class GMapAuckland extends MapView {
         }
     }
 
-    public void setLatLng(Double lat, Double lng) {
-        this.getMapAsync(gMap -> {
-            gMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lng)));
-        });
-    }
 
-    public void setZoom(int zoom) {
-        this.getMapAsync(gMap -> {
-            gMap.moveCamera(CameraUpdateFactory.zoomTo(zoom));
-        });
-    }
 
     public void pushPolylineList(Polyline poly, String trafficType) {
         switch (trafficType) {
@@ -185,6 +173,8 @@ public class GMapAuckland extends MapView {
 
             Polyline poly = googleMap.addPolyline(polyOptions);
             if (trafficType.equals("free") && !showFree) poly.setVisible(false);
+            if (trafficType.equals("moderate") && !showModerate) poly.setVisible(false);
+            if (trafficType.equals("heavy") && !showHeavy) poly.setVisible(false);
             pushPolylineList(poly, trafficType);
 
             if (!trafficType.equals("free")) {
@@ -304,12 +294,7 @@ public class GMapAuckland extends MapView {
         return eventParams;
     }
 
-    private void reactNativeEvent(String eventName, WritableMap eventParams) {
-        ReactContext reactContext = (ReactContext) this.getContext();
-        reactContext
-                .getJSModule(RCTEventEmitter.class)
-                .receiveEvent(this.getId(), eventName, eventParams);
-    }
+
 
 
 }
