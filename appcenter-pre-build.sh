@@ -10,3 +10,7 @@ echo "$APPCENTER_TRIGGER"
 # https://github.com/luggit/react-native-config/issues/282#!/usr/bin/env bash
 # Creates an .env from ENV variables for use with react-native-dotenv
 echo '' > .env
+echo "infoConnectUser = '$infoConnectUser'" >> .env
+echo "infoConnectPass = '$infoConnectPass'" >> .env
+
+cat .env
