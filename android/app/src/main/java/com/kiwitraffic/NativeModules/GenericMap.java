@@ -8,6 +8,8 @@ import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.kiwitraffic.R;
 
 public class GenericMap extends MapView {
     public GenericMap(Context context) {
@@ -20,6 +22,7 @@ public class GenericMap extends MapView {
     public void setLatLng(Double lat, Double lng) {
         this.getMapAsync(gMap -> {
             gMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lng)));
+            gMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.night_vision));
         });
     }
 

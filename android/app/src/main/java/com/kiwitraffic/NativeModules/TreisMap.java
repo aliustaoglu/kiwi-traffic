@@ -17,7 +17,6 @@ public class TreisMap extends GenericMap {
         super(context);
         this.getMapAsync(gMap -> {
             googleMap = gMap;
-            gMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.night_vision));
         });
     }
 

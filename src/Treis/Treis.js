@@ -4,30 +4,43 @@ import { Layout } from 'react-native-ui-kitten'
 import { SafeAreaView } from 'react-navigation'
 import { treisFeed, treisHeaders, markerCollection } from '../api/endpoints'
 import Axios from 'axios'
-import { parseString } from 'react-native-xml2js'
-import { objectWithoutKey } from '../utils/dataUtil'
+import { filter } from 'ramda'
+import treisDataTypes from '../enums/treisDataTypes'
 
 const TreisMap = requireNativeComponent('TreisMapViewController')
 
-const getData = result => {
-  console.log(JSON.stringify(result))
-  const roadEvent = result['tns:GetTreisInfoResponse']['tns:roadEvent']
-  console.log(objectWithoutKey(roadEvent[0], ['tns:wktGeometry']))
-}
 class Treis extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      isLoading: true
+      isLoading: true,
+      data: {
+        roadworks: {}
+      }
     }
     this.onMapReady = this.onMapReady.bind(this)
+    this.getRoadworks = this.getRoadworks.bind(this)
+  }
+
+  getRoadworks (raw) {
+    console.log(raw.constructor.name)
+    const filtered = filter(r => r.type === treisDataTypes.collectionTypes.Feature, raw.features)
+    filtered.forEach(r => {
+      console.log(r)
+    })
   }
 
   async onMapReady () {
     const treisFeed = await Axios.get(markerCollection)
-    const {areawarnings, roadworks} =  treisFeed.data
+    const { roadworks, roadhazards, areawarnings, generalwarnings, roadclosures, timsigns, vmssigns } = treisFeed.data
     this.setState({ isLoading: false })
-    console.log(roadworks)
+    const roadWorkMarkers = this.getRoadworks(roadworks)
+    //this.getRoadworks(roadhazards)
+    //this.getRoadworks(areawarnings)
+    //this.getRoadworks(generalwarnings)
+    //this.getRoadworks(roadclosures)
+    //this.getRoadworks(timsigns)
+    //this.getRoadworks(vmssigns)
   }
 
   render () {

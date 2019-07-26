@@ -88,8 +88,6 @@ public class GMapAuckland extends GenericMap {
                     return false;
                 }
             });
-            googleMap.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(context, R.raw.night_vision));
             //gMap.setMapStyle()
 
             //GoogleMap.InfoWindowAdapter infoW = new MarkerInfoWindowAdapter(getContext());
