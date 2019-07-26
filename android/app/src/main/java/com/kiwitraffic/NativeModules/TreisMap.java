@@ -3,10 +3,7 @@ package com.kiwitraffic.NativeModules;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.kiwitraffic.NativeModules.Utils.ReactUtil;
 import com.kiwitraffic.R;
@@ -23,7 +20,6 @@ public class TreisMap extends GenericMap {
             gMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.night_vision));
         });
     }
-
 
 
 }

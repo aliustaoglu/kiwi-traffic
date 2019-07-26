@@ -12,6 +12,9 @@ import com.google.android.gms.maps.model.LatLng;
 public class GenericMap extends MapView {
     public GenericMap(Context context) {
         super(context);
+        this.getMapAsync(gMap -> {
+            reactNativeEvent("onMapReady", null);
+        });
     }
 
     public void setLatLng(Double lat, Double lng) {

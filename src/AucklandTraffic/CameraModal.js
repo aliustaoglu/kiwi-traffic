@@ -30,10 +30,9 @@ const CameraModal = ({ modalVisible, markerProps, onClose }) => {
   const dims = Dimensions.get('screen')
   const [size, setSize] = useState({ height: 1, width: 1 })
 
-  let dateStr = ''
+  let dateStr = new Date().toISOString().substr(0, 16) // cache no longer than for 1 min
   const onImageLoad = e => {
-      setSize({ height: e.nativeEvent.source.height, width: e.nativeEvent.source.width })   
-      dateStr = new Date().toISOString().substr(0, 16) // cache no longer than for 1 min
+      setSize({ height: e.nativeEvent.source.height, width: e.nativeEvent.source.width })
   }
 
   // Scaled width and height

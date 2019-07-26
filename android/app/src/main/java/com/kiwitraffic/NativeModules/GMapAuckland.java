@@ -79,7 +79,6 @@ public class GMapAuckland extends GenericMap {
 
         this.getMapAsync(gMap -> {
             googleMap = gMap;
-            reactNativeEvent("onMapReady", null);
             gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {

@@ -7,3 +7,11 @@ export const aucklandHeaders = {
   username: infoConnectUser,
   password: infoConnectPass
 }
+
+export const treisFeed = `https://infoconnect1.highwayinfo.govt.nz/ic/jbi/TREIS/REST/FeedService/`
+export const treisHeaders = aucklandHeaders
+
+export const markerCollection = `https://www.journeys.nzta.govt.nz/assets/tas/markercollection.json`
+export const journeyCollection = `https://www.journeys.nzta.govt.nz/assets/tas/journeycollection.json`
+export const regionCollection = `https://www.journeys.nzta.govt.nz/assets/tas/regions.json`
+export const cameraCollection = `https://www.journeys.nzta.govt.nz/assets/tas/cameras.json`

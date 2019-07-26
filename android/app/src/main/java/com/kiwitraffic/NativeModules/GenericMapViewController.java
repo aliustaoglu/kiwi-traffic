@@ -2,10 +2,13 @@ package com.kiwitraffic.NativeModules;
 
 import android.view.View;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.google.android.gms.maps.MapView;
+
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -36,6 +39,14 @@ public class GenericMapViewController  extends SimpleViewManager<View>{
     @ReactProp(name = "zoom")
     public void setZoom(GenericMap view, @Nullable Integer zoom) {
         view.setZoom(zoom);
+    }
+
+    @Nullable
+    @Override
+    public Map getExportedCustomBubblingEventTypeConstants() {
+        return MapBuilder.builder().put("onMapReady", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onMapReady")))
+                .put("onMarkerClick", MapBuilder.of("phasedRegistrationNames", MapBuilder.of("bubbled", "onMarkerClick")))
+                .build();
     }
 
 }
