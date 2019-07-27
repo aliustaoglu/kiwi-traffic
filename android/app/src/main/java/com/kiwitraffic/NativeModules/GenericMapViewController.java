@@ -1,6 +1,8 @@
 package com.kiwitraffic.NativeModules;
 
 import android.view.View;
+
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
@@ -13,7 +15,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class GenericMapViewController  extends SimpleViewManager<View>{
+public class GenericMapViewController extends SimpleViewManager<View> {
 
     @Nonnull
     @Override
@@ -33,12 +35,17 @@ public class GenericMapViewController  extends SimpleViewManager<View>{
 
     @ReactProp(name = "latLng")
     public void setLatLng(GenericMap view, @Nullable ReadableMap coords) {
-        view.setLatLng(coords.getDouble("lat"), coords.getDouble("lng"));
+        view.getMapAsync(gMap -> view.setLatLng(coords.getDouble("lat"), coords.getDouble("lng")));
     }
 
     @ReactProp(name = "zoom")
     public void setZoom(GenericMap view, @Nullable Integer zoom) {
-        view.setZoom(zoom);
+        view.getMapAsync(gMap -> view.setZoom(zoom));
+    }
+
+    @ReactProp(name = "data")
+    public void setData(GenericMap view, @Nullable ReadableArray data) {
+        view.getMapAsync(gMap -> view.setData(data));
     }
 
     @Nullable
