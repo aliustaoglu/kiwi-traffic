@@ -56,21 +56,6 @@ public class GMapAuckland extends GenericMap {
     private List<Polyline> polyModerate = new ArrayList<>();
     private List<Polyline> polyHeavy = new ArrayList<>();
 
-    private BitmapDescriptor getIcon(String fileName, int width) {
-        BitmapDescriptor img = null;
-        try {
-            Bitmap bt = BitmapFactory.decodeStream(assetManager.open(fileName));
-            Bitmap imgResized = Bitmap.createScaledBitmap(bt, width, width, false);
-            img = BitmapDescriptorFactory.fromBitmap(imgResized);
-        } catch (IOException e) {
-
-        }
-        return img;
-    }
-
-    private BitmapDescriptor getIcon(String fileName) {
-        return getIcon(fileName, 84);
-    }
 
     public GMapAuckland(Context context) {
         super(context);
