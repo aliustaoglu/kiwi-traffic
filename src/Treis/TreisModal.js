@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layout, Text, Button } from 'react-native-ui-kitten'
 import Modal from 'react-native-modal'
-import { Header, SubTitle, Title } from '../components/ModalComponents'
+import { Header, Title } from '../components/ModalComponents'
 import styled from 'styled-components/native'
 
 const Body = styled(Layout)`

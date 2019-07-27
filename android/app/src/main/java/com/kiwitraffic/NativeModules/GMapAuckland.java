@@ -4,20 +4,13 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.WritableMap;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -30,9 +23,6 @@ import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.EncodedPolyline;
 import com.google.maps.model.TravelMode;
 import com.kiwitraffic.NativeModules.Utils.ReactUtil;
-import com.kiwitraffic.R;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +68,6 @@ public class GMapAuckland extends GenericMap {
             e.printStackTrace();
         }
     }
-
 
 
     public void pushPolylineList(Polyline poly, String trafficType) {
@@ -255,7 +244,6 @@ public class GMapAuckland extends GenericMap {
         polyModerate.forEach(polyline -> polyline.setVisible(showModerate));
         polyFree.forEach(polyline -> polyline.setVisible(showFree));
     }
-
 
 
 }

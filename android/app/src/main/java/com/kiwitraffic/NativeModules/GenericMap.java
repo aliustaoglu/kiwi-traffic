@@ -1,9 +1,13 @@
 package com.kiwitraffic.NativeModules;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Bundle;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
@@ -18,6 +22,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.DirectionsApi;
+import com.google.maps.DirectionsApiRequest;
+import com.google.maps.GeoApiContext;
+import com.google.maps.android.PolyUtil;
+import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.EncodedPolyline;
+import com.google.maps.model.TravelMode;
 import com.kiwitraffic.R;
 
 import java.io.IOException;
@@ -31,13 +44,25 @@ public class GenericMap extends MapView {
 
     protected List<Marker> markers = new ArrayList<>();
     protected AssetManager assetManager;
+    protected GeoApiContext geoApi;
+    protected String apiKey;
+    protected ApplicationInfo app;
+    protected Bundle bundle;
 
     public GenericMap(Context context) {
         super(context);
         assetManager = context.getAssets();
+        try {
+            app = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            bundle = app.metaData;
+            apiKey = bundle.getString("com.google.android.geo.API_KEY");
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
         this.getMapAsync(gMap -> {
             googleMap = gMap;
             reactNativeEvent("onMapReady", null);
+            geoApi = new GeoApiContext.Builder().apiKey(apiKey).build();
             gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
@@ -92,5 +117,32 @@ public class GenericMap extends MapView {
         WritableMap eventParams = Arguments.createMap();
         tags.forEach((name, val) -> eventParams.putString(name, val));
         return eventParams;
+    }
+
+    protected void makePolyline(Double startLat, Double startLon, Double endLat, Double endLon){
+
+        com.google.maps.model.LatLng start = new com.google.maps.model.LatLng();
+        com.google.maps.model.LatLng end = new com.google.maps.model.LatLng();
+        start.lat = startLat;
+        start.lng = startLon;
+        end.lat = endLat;
+        end.lng = endLon;
+        try {
+            DirectionsApiRequest directionsApiRequest = DirectionsApi.newRequest(geoApi);
+            DirectionsResult result = directionsApiRequest.origin(start).destination(end).mode(TravelMode.DRIVING).await();
+            EncodedPolyline overviewPolyline = result.routes[0].overviewPolyline;
+            String encodedPolyline = overviewPolyline.getEncodedPath();
+            List<LatLng> points = PolyUtil.decode(encodedPolyline);
+            PolylineOptions polyOptions = new PolylineOptions();
+            List<LatLng> polyPoints = PolyUtil.decode(encodedPolyline);
+            for (int i = 0; i < polyPoints.size(); i++) {
+                polyOptions.add(polyPoints.get(i));
+            }
+            polyOptions.color(Color.RED).width(12);
+            Polyline poly = googleMap.addPolyline(polyOptions);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

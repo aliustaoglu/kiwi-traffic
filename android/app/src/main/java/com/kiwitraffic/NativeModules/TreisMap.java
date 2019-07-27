@@ -2,7 +2,6 @@ package com.kiwitraffic.NativeModules;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-
 import com.facebook.react.bridge.Dynamic;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
@@ -12,7 +11,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.kiwitraffic.NativeModules.Utils.ReactUtil;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,17 +30,24 @@ public class TreisMap extends GenericMap {
         ReadableArray mapData = data;
         for(int i=0;i<data.size();i++){
             ReadableMap event = data.getMap(i);
+            String markerType = event.getString("markerType");
+            String id = event.getString("id");
+
             // Coordinates may return either array of doubles or array of array of doubles
             // eg. [0,0] or [[0,0],[1,1]]
             Dynamic dynamicCoordinates = event.getArray("coordinates").getDynamic(0);
             if (dynamicCoordinates.getType().name().equals("Number")) {
                 Double lat = event.getArray("coordinates").getDouble(1);
                 Double lon = event.getArray("coordinates").getDouble(0);
-                String id = event.getString("id");
-                String markerType = event.getString("markerType");
                 placeMarker(lat, lon, id, markerType);
             } else {
                 ReadableArray arr = dynamicCoordinates.asArray();
+                Double startLat = arr.getArray(0).getDouble(1);
+                Double startLon = arr.getArray(0).getDouble(0);
+                Double endLat = arr.getArray(arr.size() - 1).getDouble(1);
+                Double endLon = arr.getArray(arr.size() - 1).getDouble(0);
+                placeMarker(startLat, startLon, id, markerType);
+                //makePolyline(startLat, startLon, endLat, endLon);
 
             }
         }
