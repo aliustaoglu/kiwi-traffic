@@ -1,4 +1,5 @@
 import React from 'react'
+import { ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { Layout } from 'react-native-ui-kitten'
 import { SafeAreaView } from 'react-navigation'
@@ -100,7 +101,8 @@ class AucklandTraffic extends React.Component {
       signsData: [],
       cameras: [],
       markerInfoModal: false,
-      markerProps: {}
+      markerProps: {},
+      isLoading: true
     }
     this.onMapReady = this.onMapReady.bind(this)
     this.onMarkerClick = this.onMarkerClick.bind(this)
@@ -133,6 +135,7 @@ class AucklandTraffic extends React.Component {
       const camsData = getCamsData(result)
       this.setState({ cameras: camsData })
     })
+    this.setState({ isLoading: false })
   }
 
   async componentDidMount () {}
@@ -141,9 +144,16 @@ class AucklandTraffic extends React.Component {
     return (
       <SafeAreaView style={{ height: '100%' }}>
         <If condition={this.state.markerProps.markerType === 'camera'}>
-          <CameraModal markerProps={this.state.markerProps} modalVisible={this.state.markerInfoModal} onClose={() => this.setState({ markerInfoModal: false })} />
+          <CameraModal
+            markerProps={this.state.markerProps}
+            modalVisible={this.state.markerInfoModal}
+            onClose={() => this.setState({ markerInfoModal: false })}
+          />
         </If>
         <Layout style={{ height: '100%' }}>
+          <If condition={this.state.isLoading}>
+            <ActivityIndicator style={{ height: '100%' }} />
+          </If>
           <MapView
             style={{ height: '90%' }}
             preRoutes={preRoutes}

@@ -1,16 +1,29 @@
 import React from 'react'
-import { requireNativeComponent, ActivityIndicator } from 'react-native'
-import { Layout } from 'react-native-ui-kitten'
+import { requireNativeComponent, ActivityIndicator, Image } from 'react-native'
+import { Layout, Button } from 'react-native-ui-kitten'
 import { SafeAreaView } from 'react-navigation'
 import { markerCollection } from '../api/endpoints'
 import Axios from 'axios'
 import { filter, head } from 'ramda'
 import treisDataTypes from '../enums/treisDataTypes'
 import TreisModal from './TreisModal'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import styled from 'styled-components/native'
+
+const back = require('../images/back.png')
 
 const TreisMap = requireNativeComponent('TreisMapViewController')
-
+const BackButtonContainer = styled.View`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+`
 class Treis extends React.Component {
+  static navigationOptions = {
+    header: null
+  }
+
   constructor (props) {
     super(props)
     this.state = {
@@ -78,6 +91,11 @@ class Treis extends React.Component {
             latLng={{ lat: -38.6857, lng: 176.0702 }}
             zoom={7}
           />
+          <BackButtonContainer>
+            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+              <Image source={back} />
+            </TouchableOpacity>
+          </BackButtonContainer>
         </Layout>
       </SafeAreaView>
     )

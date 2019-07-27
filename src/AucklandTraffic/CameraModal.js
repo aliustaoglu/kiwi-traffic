@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { View, Image, Button, Dimensions } from 'react-native'
+import { Button, Layout as View } from 'react-native-ui-kitten'
+import { Image, Dimensions } from 'react-native'
 import Modal from 'react-native-modal'
 import { Header, SubTitle, Title } from '../components/ModalComponents'
 
@@ -31,8 +32,10 @@ const CameraModal = ({ modalVisible, markerProps, onClose }) => {
           <SubTitle>{markerProps.description}</SubTitle>
         </View>
         <Image style={{ width, height }} onLoad={onImageLoad} source={{ uri: markerProps.imageUrl + '?' + dateStr }} />
+        <Button style={{ margin: 8 }} onPress={onClose}>
+          Close
+        </Button>
       </View>
-      <Button onPress={onClose} title='Close' />
     </Modal>
   )
 }

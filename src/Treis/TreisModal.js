@@ -26,7 +26,7 @@ class TreisModal extends React.Component {
     const properties = this.props.modalProps.properties
     console.log(JSON.stringify(this.props.modalProps.properties, 4))
     return (
-      <Modal isVisible style={{ flex: 0, width: '90%', backgroundColor: '#fff' }}>
+      <Modal swipeDirection='down' onSwipeComplete={this.props.onClose} backdropOpacity={0.5} isVisible style={{ flex: 0, width: '90%', backgroundColor: '#fff' }}>
         <Layout>
           <Header>
             <Title>
@@ -46,7 +46,9 @@ class TreisModal extends React.Component {
             <BodyTitle>Expected resolution:</BodyTitle>
             <BodyText>{properties.expectedResolution}</BodyText>
           </Body>
-          <Button onPress={this.props.onClose}>Close</Button>
+          <Button style={{ margin: 8 }} onPress={this.props.onClose}>
+            Close
+          </Button>
         </Layout>
       </Modal>
     )
