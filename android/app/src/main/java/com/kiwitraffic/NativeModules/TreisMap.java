@@ -13,6 +13,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.kiwitraffic.NativeModules.Utils.ReactUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TreisMap extends GenericMap {
     public GoogleMap googleMap;
     private AssetManager assetManager;
@@ -22,7 +25,6 @@ public class TreisMap extends GenericMap {
         super(context);
         this.getMapAsync(gMap -> {
             googleMap = gMap;
-            //this.markersData.getMap("roadworks");
         });
     }
 
@@ -51,20 +53,14 @@ public class TreisMap extends GenericMap {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(new LatLng(lat, lon)).icon(img);
         Marker markerTraffic = googleMap.addMarker(markerOptions);
+        markers.add(markerTraffic);
+        Map<String, String> markerTag = new HashMap<>();
+        markerTag.put("lat", lat.toString());
+        markerTag.put("lon", lon.toString());
+        markerTag.put("id", id);
+        markerTag.put("markerType", markerType);
+        markerTraffic.setTag(markerTag);
     }
-
-    private void setRoadWorks(ReadableMap roadworks){
-        //roadworks.getArray("roadworks").getMap(0).getMap("geometry").getString("type")
-        /*ReadableArray arr = roadworks.getArray("roadworks");
-        for (int i=0;i<arr.size();i++){
-            ReadableMap geometry = arr.getMap(i).getMap("geometry");
-            if (geometry.getString("type").equals("Point")){
-
-            }
-        }*/
-    }
-
-
 
 
 

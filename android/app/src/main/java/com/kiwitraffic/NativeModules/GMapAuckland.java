@@ -64,15 +64,6 @@ public class GMapAuckland extends GenericMap {
 
         this.getMapAsync(gMap -> {
             googleMap = gMap;
-            gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                    if (marker.getTag() != null) {
-                        reactNativeEvent("onMarkerClick", composeMarkerEventParams(marker));
-                    }
-                    return false;
-                }
-            });
             //gMap.setMapStyle()
 
             //GoogleMap.InfoWindowAdapter infoW = new MarkerInfoWindowAdapter(getContext());
@@ -264,14 +255,6 @@ public class GMapAuckland extends GenericMap {
         polyModerate.forEach(polyline -> polyline.setVisible(showModerate));
         polyFree.forEach(polyline -> polyline.setVisible(showFree));
     }
-
-    private WritableMap composeMarkerEventParams(Marker marker) {
-        HashMap<String, String> tags = ((HashMap<String, String>) marker.getTag());
-        WritableMap eventParams = Arguments.createMap();
-        tags.forEach((name, val) -> eventParams.putString(name, val));
-        return eventParams;
-    }
-
 
 
 
