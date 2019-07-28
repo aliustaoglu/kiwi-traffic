@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -13,12 +12,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.dylanvann.fastimage.GlideApp;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 import com.kiwitraffic.NativeModules.Utils.WindowUtil;
@@ -93,10 +93,11 @@ public class MarkerInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                         return false;
                     }
                 };
-                GlideApp.with(context).load(markerParams.get("imageUrl"))
+                /*
+                Glide.with(context).load(markerParams.get("imageUrl"))
                         .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                         .listener(glideRequestListener)
-                        .into(imgCam);
+                        .into(imgCam);*/
             }
         }
 
