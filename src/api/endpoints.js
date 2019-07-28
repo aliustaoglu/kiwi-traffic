@@ -15,3 +15,8 @@ export const markerCollection = `https://www.journeys.nzta.govt.nz/assets/tas/ma
 export const journeyCollection = `https://www.journeys.nzta.govt.nz/assets/tas/journeycollection.json`
 export const regionCollection = `https://www.journeys.nzta.govt.nz/assets/tas/regions.json`
 export const cameraCollection = `https://www.journeys.nzta.govt.nz/assets/tas/cameras.json`
+
+export const canterburyRoadworks = `https://journeys.nzta.govt.nz/assets/roadworks/canterbury-roadworks-markers.json`
+export const canterburyClosure = `https://journeys.nzta.govt.nz/assets/roadworks/canterbury-closure-markers.json`
+export const canterburyXRoadworks = `https://journeys.nzta.govt.nz/assets/roadworks/canterbury-roadworks-extents.json`
+export const canterburyXClosure = `https://journeys.nzta.govt.nz/assets/roadworks/canterbury-closure-extents.json`
