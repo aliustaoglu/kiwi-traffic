@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest --env=jsdom --maxWorkers=4",
+    "test": "jest --env=jsdom --maxWorkers=4 --coverage",
     "bundle-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle",
     "bundle-android-old": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "bundle-ios": "react-native bundle --dev false --entry-file index.js --bundle-output ios/main.jsbundle --platform ios",
@@ -43,6 +43,7 @@
     "babel-jest": "^24.8.0",
     "babel-plugin-jsx-control-statements": "^4.0.0",
     "jest": "^24.8.0",
+    "jest-sonar-reporter": "^2.0.0",
     "jetifier": "^1.6.3",
     "metro-react-native-babel-preset": "^0.54.1",
     "react-native-debugger-open": "^0.3.19",

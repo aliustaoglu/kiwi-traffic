@@ -60,3 +60,5 @@ builds/
 .env
 .scannerwork
 *.bundle
+
+coverage/
