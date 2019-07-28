@@ -14,11 +14,4 @@ Object.assign(NativeModules, {
   }
 })
 
-/*jest.mock('react-navigation', () => {
-  return {
-    withNavigation: () => jest.fn,
-    createBottomTabNavigator: jest.fn,
-    createStackNavigator: jest.fn,
-    createAppContainer: jest.fn
-  }
-})*/
+jest.mock("YellowBox");

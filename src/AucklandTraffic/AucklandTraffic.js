@@ -142,7 +142,7 @@ class AucklandTraffic extends React.Component {
 
   render () {
     return (
-      <SafeAreaView style={{ height: '100%' }}>
+      <SafeAreaView style={{ height: '100%' }} testID="testAucklandTrafficSafeAreaView">
         <If condition={this.state.markerProps.markerType === 'camera'}>
           <CameraModal
             markerProps={this.state.markerProps}
@@ -150,7 +150,7 @@ class AucklandTraffic extends React.Component {
             onClose={() => this.setState({ markerInfoModal: false })}
           />
         </If>
-        <Layout style={{ height: '100%' }}>
+        <Layout testID="testAucklandLayout" style={{ height: '100%' }}>
           <If condition={this.state.isLoading}>
             <ActivityIndicator style={{ height: '100%' }} />
           </If>

@@ -41,7 +41,7 @@ class MapLegend extends React.Component {
     const { mapReducer, dispatch } = this.props
     const { showHeavy, showModerate, showFree, showInfo, showCamera } = mapReducer
     return (
-      <Container>
+      <Container testID="testMapLegendContainer">
         <ContainerLeft>
           <TouchableOpacity onPress={() => dispatch(setShowInfo(!showInfo))}>
             <Image source={info} style={{ width: 50, height: 50, opacity: showInfo ? 1 : 0.35 }} />

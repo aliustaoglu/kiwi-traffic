@@ -15,6 +15,7 @@ const BodyText = styled(Text)`
 const BodyTitle = styled(Text)`
   font-weight: 600;
   margin-bottom: 4px;
+  text-decoration: underline;
 `
 
 class TreisModal extends React.Component {
