@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="/Development/GitHub/kiwiTraffic/src/AucklandTraffic/__tests__/AucklandTraffic.spec.js">
-    <testCase name="Auckland Traffic tests should render Auckland Traffic page" duration="344"/>
+    <testCase name="Auckland Traffic tests should render Auckland Traffic page" duration="341"/>
   </file>
 </testExecutions>

@@ -13,7 +13,8 @@
     "install-apk": "adb install android/app/release/app-release.apk",
     "uninstall-apk": "adb uninstall com.kiwitraffic",
     "reinstall-apk": "npm run uninstall-apk && npm run install-apk",
-    "build-ios": "cd ios && xcodebuild -workspace kiwiTraffic.xcworkspace -scheme kiwiTraffic  -configuration Release SYMROOT=/Builds/ios/kiwiTraffic"
+    "build-ios": "cd ios && xcodebuild -workspace kiwiTraffic.xcworkspace -scheme kiwiTraffic  -configuration Release SYMROOT=/Builds/ios/kiwiTraffic",
+    "sonar": "sonar-scanner -Dsonar.projectKey=aliustaoglu_kiwi-traffic -Dsonar.organization=aliustaoglu -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=ec68eac9734b030aa7b7b5c1d83948112e57a93b -Dsonar.java.binaries=. -Dsonar.exclusions=ios/**/*,**/*.test.js,**/*.spec.js -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info"
   },
   "dependencies": {
     "@eva-design/eva": "^1.0.1",
