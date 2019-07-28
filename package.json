@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest",
+    "test": "jest --env=jsdom --maxWorkers=4",
     "bundle-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle",
     "bundle-android-old": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "bundle-ios": "react-native bundle --dev false --entry-file index.js --bundle-output ios/main.jsbundle --platform ios",
@@ -38,6 +38,7 @@
     "@babel/core": "^7.4.5",
     "@babel/plugin-transform-regenerator": "7.4.4",
     "@babel/runtime": "^7.4.5",
+    "@types/jest": "^24.0.15",
     "babel-jest": "^24.8.0",
     "babel-plugin-jsx-control-statements": "^4.0.0",
     "jest": "^24.8.0",
@@ -45,8 +46,5 @@
     "metro-react-native-babel-preset": "^0.54.1",
     "react-native-debugger-open": "^0.3.19",
     "react-test-renderer": "16.8.3"
-  },
-  "jest": {
-    "preset": "react-native"
   }
 }
