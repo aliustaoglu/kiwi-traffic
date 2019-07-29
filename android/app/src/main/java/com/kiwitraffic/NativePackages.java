@@ -4,9 +4,11 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
+import com.kiwitraffic.NativeModules.ChristchurchMapViewController;
 import com.kiwitraffic.NativeModules.GenericMapViewController;
 import com.kiwitraffic.NativeModules.GoogleMapAucklandView;
 import com.kiwitraffic.NativeModules.NavigatorView;
+import com.kiwitraffic.NativeModules.TrafficCamsViewController;
 import com.kiwitraffic.NativeModules.TreisMapViewController;
 
 import java.util.ArrayList;
@@ -32,7 +34,9 @@ public class NativePackages implements ReactPackage {
                 new NavigatorView(),
                 new GenericMapViewController(),
                 new GoogleMapAucklandView(),
-                new TreisMapViewController()
+                new TreisMapViewController(),
+                new TrafficCamsViewController(),
+                new ChristchurchMapViewController()
         );
     }
 }

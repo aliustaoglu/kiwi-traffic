@@ -2,6 +2,7 @@ import { createAppContainer, createStackNavigator } from 'react-navigation';
 import LandingTabs from './LandingTabs';
 import AucklandTraffic from '../AucklandTraffic/AucklandTraffic';
 import Treis from '../Treis/Treis';
+import TrafficCams from '../TrafficCams/TrafficCams';
 
 const StackNavigator = createStackNavigator(
   {
@@ -13,6 +14,9 @@ const StackNavigator = createStackNavigator(
     },
     Treis: {
       screen: Treis
+    },
+    TrafficCams: {
+      screen: TrafficCams
     }
   },
   {
