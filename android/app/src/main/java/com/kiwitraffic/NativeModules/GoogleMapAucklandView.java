@@ -5,13 +5,9 @@ import android.view.View;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.google.android.gms.maps.MapView;
-
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -60,9 +56,5 @@ public class GoogleMapAucklandView extends GenericMapViewController {
 
     }
 
-    @ReactProp(name = "cameras")
-    public void setCameras(MapView view, @Nullable ReadableArray cameras) {
-        view.getMapAsync(gMap -> mapView.setCameras(cameras));
-    }
 
 }

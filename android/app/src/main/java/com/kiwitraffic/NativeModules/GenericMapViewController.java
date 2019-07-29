@@ -48,6 +48,12 @@ public class GenericMapViewController extends SimpleViewManager<View> {
         view.getMapAsync(gMap -> view.setData(data));
     }
 
+
+    @ReactProp(name = "cameras")
+    public void setCameras(GenericMap view, @Nullable ReadableArray cameras) {
+        view.getMapAsync(gMap -> view.setCameras(cameras));
+    }
+
     @Nullable
     @Override
     public Map getExportedCustomBubblingEventTypeConstants() {

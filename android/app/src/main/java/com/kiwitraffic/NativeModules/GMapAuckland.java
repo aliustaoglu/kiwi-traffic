@@ -41,7 +41,6 @@ public class GMapAuckland extends GenericMap {
     private List<Marker> markersFree = new ArrayList<>();
     private List<Marker> markersModerate = new ArrayList<>();
     private List<Marker> markersHeavy = new ArrayList<>();
-    private List<Marker> markersCamera = new ArrayList<>();
     private List<Polyline> polyFree = new ArrayList<>();
     private List<Polyline> polyModerate = new ArrayList<>();
     private List<Polyline> polyHeavy = new ArrayList<>();
@@ -201,31 +200,7 @@ public class GMapAuckland extends GenericMap {
         existingRoutes = preRoutes;
     }
 
-    public void setCameras(ReadableArray cameras) {
-        for (int i = 0; i < cameras.size(); i++) {
-            String camDescription = cameras.getMap(i).getString("description");
-            String camName = cameras.getMap(i).getString("name");
-            String thumbUrl = cameras.getMap(i).getString("thumbUrl");
-            String imageUrl = cameras.getMap(i).getString("imageUrl");
-            Double camLat = Double.parseDouble(cameras.getMap(i).getString("lat"));
-            Double camLon = Double.parseDouble(cameras.getMap(i).getString("lon"));
 
-
-            MarkerOptions markerOptions = new MarkerOptions();
-            BitmapDescriptor img = getIcon("img/traffic-cams.png");
-            markerOptions.position(new LatLng(camLat, camLon)).icon(img);//.title(camName).snippet(camDescription);
-
-            Marker camMarker = googleMap.addMarker(markerOptions);
-            markersCamera.add(camMarker);
-            Map<String, String> camObject = new HashMap<>();
-            camObject.put("markerType", "camera");
-            camObject.put("thumbUrl", thumbUrl);
-            camObject.put("imageUrl", imageUrl);
-            camObject.put("name", camName);
-            camObject.put("description", camDescription);
-            camMarker.setTag(camObject);
-        }
-    }
 
     public void setMapReducer(ReadableMap mpReducer) {
         mapReducer = mpReducer;

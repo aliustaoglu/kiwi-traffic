@@ -4,11 +4,8 @@ import android.view.View;
 
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.uimanager.ThemedReactContext;
-import com.facebook.react.uimanager.annotations.ReactProp;
 import com.google.android.gms.maps.MapView;
-
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class TrafficCamsViewController extends GenericMapViewController {
     @Nonnull

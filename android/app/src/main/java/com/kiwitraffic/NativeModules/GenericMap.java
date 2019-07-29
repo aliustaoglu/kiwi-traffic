@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.DirectionsApi;
@@ -37,6 +38,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GenericMap extends MapView {
     GoogleMap googleMap;
@@ -48,6 +50,7 @@ public class GenericMap extends MapView {
     protected String apiKey;
     protected ApplicationInfo app;
     protected Bundle bundle;
+    protected List<Marker> markersCamera = new ArrayList<>();
 
     public GenericMap(Context context) {
         super(context);
@@ -63,6 +66,7 @@ public class GenericMap extends MapView {
             googleMap = gMap;
             reactNativeEvent("onMapReady", null);
             geoApi = new GeoApiContext.Builder().apiKey(apiKey).build();
+            googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.night_vision));
             gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
@@ -77,7 +81,6 @@ public class GenericMap extends MapView {
 
     public void setLatLng(Double lat, Double lng) {
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lng)));
-        googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.night_vision));
 
     }
 
@@ -87,6 +90,32 @@ public class GenericMap extends MapView {
 
     public void setData(ReadableArray data) {
         mapData = data;
+    }
+
+    public void setCameras(ReadableArray cameras) {
+        for (int i = 0; i < cameras.size(); i++) {
+            String camDescription = cameras.getMap(i).getString("description");
+            String camName = cameras.getMap(i).getString("name");
+            String thumbUrl = cameras.getMap(i).getString("thumbUrl");
+            String imageUrl = cameras.getMap(i).getString("imageUrl");
+            Double camLat = Double.parseDouble(cameras.getMap(i).getString("lat"));
+            Double camLon = Double.parseDouble(cameras.getMap(i).getString("lon"));
+
+
+            MarkerOptions markerOptions = new MarkerOptions();
+            BitmapDescriptor img = getIcon("img/traffic-cams.png");
+            markerOptions.position(new LatLng(camLat, camLon)).icon(img);//.title(camName).snippet(camDescription);
+
+            Marker camMarker = googleMap.addMarker(markerOptions);
+            markersCamera.add(camMarker);
+            Map<String, String> camObject = new HashMap<>();
+            camObject.put("markerType", "camera");
+            camObject.put("thumbUrl", thumbUrl);
+            camObject.put("imageUrl", imageUrl);
+            camObject.put("name", camName);
+            camObject.put("description", camDescription);
+            camMarker.setTag(camObject);
+        }
     }
 
     protected void reactNativeEvent(String eventName, WritableMap eventParams) {
