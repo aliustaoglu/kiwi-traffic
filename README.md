@@ -6,3 +6,5 @@ This is an open source project that uses public & free NZTA InfoConnect API to g
 
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aliustaoglu_kiwi-traffic&metric=alert_status)](https://sonarcloud.io/dashboard?id=aliustaoglu_kiwi-traffic)
+
+[![Build Status](https://travis-ci.org/aliustaoglu/kiwi-traffic)](https://travis-ci.org/aliustaoglu/kiwi-traffic)
