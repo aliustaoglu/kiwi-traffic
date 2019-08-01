@@ -1,5 +1,6 @@
 package com.kiwitraffic.NativeModules.Utils;
 
+import com.facebook.react.bridge.ReadableMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
@@ -7,13 +8,13 @@ public class MapClusterItem implements ClusterItem {
     private LatLng latLng;
     private String title;
     private String snippet;
-    public String tag;
+    public ReadableMap tag;
 
-    public MapClusterItem(LatLng l, String t, String s, String g){
+    public MapClusterItem(LatLng l, String t, String s, ReadableMap tg){
         latLng = l;
         title = t;
         snippet = s;
-        tag = g;
+        tag = tg;
     }
 
     @Override
@@ -31,7 +32,7 @@ public class MapClusterItem implements ClusterItem {
         return snippet;
     }
 
-    public String getTag(){
+    public ReadableMap getTag(){
         return tag;
     }
 }
