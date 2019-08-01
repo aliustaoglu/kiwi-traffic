@@ -20,3 +20,4 @@ export const canterburyRoadworks = `https://journeys.nzta.govt.nz/assets/roadwor
 export const canterburyClosure = `https://journeys.nzta.govt.nz/assets/roadworks/canterbury-closure-markers.json`
 export const canterburyXRoadworks = `https://journeys.nzta.govt.nz/assets/roadworks/canterbury-roadworks-extents.json`
 export const canterburyXClosure = `https://journeys.nzta.govt.nz/assets/roadworks/canterbury-closure-extents.json`
+

@@ -3,6 +3,7 @@ import LandingTabs from './LandingTabs';
 import AucklandTraffic from '../AucklandTraffic/AucklandTraffic';
 import Treis from '../Treis/Treis';
 import TrafficCams from '../TrafficCams/TrafficCams';
+import ChristchurchMap from '../ChristchurchTraffic/ChristchurchMap';
 
 const StackNavigator = createStackNavigator(
   {
@@ -17,6 +18,9 @@ const StackNavigator = createStackNavigator(
     },
     TrafficCams: {
       screen: TrafficCams
+    },
+    ChristchurchMap: {
+      screen: ChristchurchMap
     }
   },
   {

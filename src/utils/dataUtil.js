@@ -1,10 +1,9 @@
 import { path } from 'ramda'
 
 export const objectWithoutKey = (object, key) => {
-  const {[key]: deletedKey, ...otherKeys} = object;
-  return otherKeys;
+  const { [key]: deletedKey, ...otherKeys } = object
+  return otherKeys
 }
-
 
 export const getTrafficData = result => {
   const lastUpdated = result['tns:getTrafficConditionsResponse']['tns:trafficConditions'][0]['tns:lastUpdated']
@@ -71,4 +70,27 @@ export const getCamsData = result => {
     }
   })
   return camsData
+}
+
+export const getChristchurchRoadworks = result => {
+  let roadworks = []
+  result.forEach(r => {
+    const lat = r.geometry.coordinates[1]
+    const lon = r.geometry.coordinates[0]
+    const { EventType, LocationArea, EventDescription, Restrictions, StartDateNice, EndDateNice, LastUpdatedNice, CompanyName, TMPNumber } = r.properties
+    roadworks.push({
+      lat,
+      lon,
+      eventType: EventType,
+      locationArea:LocationArea,
+      eventDescription:EventDescription,
+      restrictions:Restrictions,
+      startDateNice:StartDateNice,
+      endDateNice:EndDateNice,
+      lastUpdatedNice:LastUpdatedNice,
+      companyName:CompanyName,
+      tmpNumber:TMPNumber
+    })
+  })
+  return roadworks
 }
