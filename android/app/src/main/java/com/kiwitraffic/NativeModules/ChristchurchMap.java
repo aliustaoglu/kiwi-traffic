@@ -1,24 +1,16 @@
 package com.kiwitraffic.NativeModules;
 
 import android.content.Context;
-import android.hardware.camera2.params.StreamConfigurationMap;
-
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.kiwitraffic.NativeModules.Utils.MapClusterItem;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import com.kiwitraffic.NativeModules.Utils.MapClusterItemRenderer;
 
 public class ChristchurchMap extends GenericMap implements ClusterManager.OnClusterItemClickListener, ClusterManager.OnClusterClickListener {
     private ClusterManager clusterManager;
@@ -27,10 +19,14 @@ public class ChristchurchMap extends GenericMap implements ClusterManager.OnClus
         super(context);
         this.getMapAsync(gMap -> {
             clusterManager = new ClusterManager<MapClusterItem>(context, googleMap);
+            MapClusterItemRenderer clusterItemRenderer = new MapClusterItemRenderer(context, googleMap, clusterManager);
+
             clusterManager.setOnClusterItemClickListener(this);
             clusterManager.setOnClusterClickListener(this);
             googleMap.setOnCameraIdleListener(clusterManager);
             googleMap.setOnMarkerClickListener(clusterManager);
+
+            clusterManager.setRenderer(clusterItemRenderer);
         });
     }
 
