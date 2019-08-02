@@ -23,3 +23,18 @@ export const SubTitle = styled(Text)`
   font-weight: 400;
   padding: 8px;
 `
+
+
+export const Body = styled(Layout)`
+  padding: 8px;
+`
+
+export const BodyText = styled(Text)`
+  margin-bottom: 8px;
+`
+
+export const BodyTitle = styled(Text)`
+  font-weight: 600;
+  margin-bottom: 4px;
+  text-decoration: underline;
+`

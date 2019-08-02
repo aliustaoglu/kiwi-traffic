@@ -82,8 +82,7 @@ class SettingsView extends React.Component {
             <Text>Developed by Cüneyt Aliustaoğlu</Text>
             <Text />
             <Text>
-              I am a full stack developer based in Auckland. If you want to work with me connect via LinkedIn or GitHub. I am a bedroom musician. See my videos
-              on YouTube.
+              I am a full stack developer based in Auckland. If you want to work with me connect using the links below.
             </Text>
             <SocialLayout>
               <TouchableOpacity onPress={this.onClickSocial('home')}>

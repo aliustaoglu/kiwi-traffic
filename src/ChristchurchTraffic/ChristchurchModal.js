@@ -3,13 +3,10 @@ import { Layout, Button } from 'react-native-ui-kitten'
 import Modal from 'react-native-modal'
 import { Header, Title, Body, BodyText, BodyTitle } from '../components/ModalComponents'
 
-class TreisModal extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-
+class ChristchurchModal extends React.Component {
   render () {
-    const properties = this.props.modalProps.properties
+    const properties = this.props.modalProps
+    console.log(properties)
     return (
       <Modal
         swipeDirection='down'
@@ -20,22 +17,25 @@ class TreisModal extends React.Component {
       >
         <Layout>
           <Header>
-            <Title>
-              {properties.eventType} : {properties.impact}
-            </Title>
+            <Title>{properties.eventType}</Title>
           </Header>
           <Body>
             <BodyText>{properties.locationArea}</BodyText>
             <BodyText>{properties.eventDescription}</BodyText>
-            <BodyText>{properties.eventComments}</BodyText>
-            <BodyTitle>Scheduled Time:</BodyTitle>
+            <BodyTitle>Impact:</BodyTitle>
+            <BodyText>{properties.impact}</BodyText>
+            <BodyTitle>Restrictions:</BodyTitle>
+            <BodyText>{properties.restrictions}</BodyText>
+            <BodyTitle>Start Date:</BodyTitle>
             <BodyText>{properties.startDateNice}</BodyText>
-            <BodyTitle>Detour route:</BodyTitle>
-            <BodyText>{properties.alternativeRoute}</BodyText>
-            <BodyTitle>Update received:</BodyTitle>
-            <BodyText>{properties.eventModifiedNice}</BodyText>
-            <BodyTitle>Expected resolution:</BodyTitle>
-            <BodyText>{properties.expectedResolution}</BodyText>
+            <BodyTitle>End Date:</BodyTitle>
+            <BodyText>{properties.endDateNice}</BodyText>
+            <BodyTitle>Last updated:</BodyTitle>
+            <BodyText>{properties.lastUpdatedNice}</BodyText>
+            <BodyTitle>Company:</BodyTitle>
+            <BodyText>{properties.companyName}</BodyText>
+            <BodyTitle>Tmp:</BodyTitle>
+            <BodyText>{properties.tmpNumber}</BodyText>
           </Body>
           <Button style={{ margin: 8 }} onPress={this.props.onClose}>
             Close
@@ -46,4 +46,4 @@ class TreisModal extends React.Component {
   }
 }
 
-export default TreisModal
+export default ChristchurchModal

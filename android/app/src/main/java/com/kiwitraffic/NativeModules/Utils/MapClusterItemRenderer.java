@@ -1,7 +1,6 @@
 package com.kiwitraffic.NativeModules.Utils;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -12,7 +11,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
-import com.kiwitraffic.NativeModules.GenericMap;
 
 import java.io.IOException;
 
@@ -32,7 +30,7 @@ public class MapClusterItemRenderer extends DefaultClusterRenderer {
         BitmapDescriptor img;
         try {
             Bitmap bt = BitmapFactory.decodeStream(context.getAssets().open("img/roadworks.png"));
-            Bitmap imgResized = Bitmap.createScaledBitmap(bt, 96, 96, false);
+            Bitmap imgResized = Bitmap.createScaledBitmap(bt, 84, 84, false);
             img = BitmapDescriptorFactory.fromBitmap(imgResized);
             markerOptions.icon(img);
         } catch (IOException e) {

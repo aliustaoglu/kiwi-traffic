@@ -1,14 +1,16 @@
 package com.kiwitraffic.NativeModules;
 
 import android.content.Context;
+
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableMap;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
-import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.kiwitraffic.NativeModules.Utils.MapClusterItem;
 import com.kiwitraffic.NativeModules.Utils.MapClusterItemRenderer;
 
@@ -38,13 +40,8 @@ public class ChristchurchMap extends GenericMap implements ClusterManager.OnClus
             Double lat = work.getDouble("lat");
             Double lon = work.getDouble("lon");
             LatLng pos = new LatLng(lat, lon);
-            MapClusterItem item = new MapClusterItem(pos, "deneme", "yanila", work);
-            //MarkerOptions markerOptions = new MarkerOptions();
-            //BitmapDescriptor img = getIcon("img/roadworks.png");
-            //markerOptions.position(new LatLng(lat, lon)).icon(img);
+            MapClusterItem item = new MapClusterItem(pos, null, null, work);
             clusterManager.addItem(item);
-
-            //Marker marker = googleMap.addMarker(markerOptions);
         }
         clusterManager.cluster();
 
@@ -53,7 +50,10 @@ public class ChristchurchMap extends GenericMap implements ClusterManager.OnClus
 
     @Override
     public boolean onClusterItemClick(ClusterItem clusterItem) {
-
+        MapClusterItem mapCluster = (MapClusterItem) clusterItem;
+        WritableMap roadworkParams = Arguments.createMap();
+        roadworkParams.merge(mapCluster.getTag());
+        reactNativeEvent("onMarkerClick", roadworkParams);
         return false;
     }
 

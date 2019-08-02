@@ -77,19 +77,31 @@ export const getChristchurchRoadworks = result => {
   result.forEach(r => {
     const lat = r.geometry.coordinates[1]
     const lon = r.geometry.coordinates[0]
-    const { EventType, LocationArea, EventDescription, Restrictions, StartDateNice, EndDateNice, LastUpdatedNice, CompanyName, TMPNumber } = r.properties
+    const {
+      EventType,
+      LocationArea,
+      EventDescription,
+      Restrictions,
+      Impact,
+      StartDateNice,
+      EndDateNice,
+      LastUpdatedNice,
+      CompanyName,
+      TMPNumber
+    } = r.properties
     roadworks.push({
       lat,
       lon,
       eventType: EventType,
-      locationArea:LocationArea,
-      eventDescription:EventDescription,
-      restrictions:Restrictions,
-      startDateNice:StartDateNice,
-      endDateNice:EndDateNice,
-      lastUpdatedNice:LastUpdatedNice,
-      companyName:CompanyName,
-      tmpNumber:TMPNumber
+      locationArea: LocationArea,
+      eventDescription: EventDescription,
+      restrictions: Restrictions,
+      startDateNice: StartDateNice,
+      endDateNice: EndDateNice,
+      lastUpdatedNice: LastUpdatedNice,
+      companyName: CompanyName,
+      tmpNumber: TMPNumber,
+      impact: Impact
     })
   })
   return roadworks
