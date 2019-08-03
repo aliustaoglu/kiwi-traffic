@@ -10,7 +10,7 @@ import { parseString } from 'react-native-xml2js'
 import { preRoutes } from '../assets/routes'
 import MapLegend from './MapLegend'
 import CameraModal from './CameraModal'
-import { getTrafficData, getSignsData, getCamsData } from '../utils/dataUtil';
+import { getTrafficData, getSignsData, getCamsData } from '../utils/dataUtil'
 
 class AucklandTraffic extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -75,15 +75,11 @@ class AucklandTraffic extends React.Component {
 
   render () {
     return (
-      <SafeAreaView style={{ height: '100%' }} testID="testAucklandTrafficSafeAreaView">
-        <If condition={this.state.markerProps.markerType === 'camera'}>
-          <CameraModal
-            markerProps={this.state.markerProps}
-            modalVisible={this.state.markerInfoModal}
-            onClose={() => this.setState({ markerInfoModal: false })}
-          />
+      <SafeAreaView style={{ height: '100%' }} testID='testAucklandTrafficSafeAreaView'>
+        <If condition={this.state.markerProps.markerType === 'camera' && this.state.markerInfoModal}>
+          <CameraModal markerProps={this.state.markerProps} onClose={() => this.setState({ markerInfoModal: false })} />
         </If>
-        <Layout testID="testAucklandLayout" style={{ height: '100%' }}>
+        <Layout testID='testAucklandLayout' style={{ height: '100%' }}>
           <If condition={this.state.isLoading}>
             <ActivityIndicator style={{ height: '100%' }} />
           </If>
