@@ -6,8 +6,8 @@ import { parseString } from 'react-native-xml2js'
 import { aucklandCameras, aucklandHeaders } from '../api/endpoints'
 import Axios from 'axios'
 import { getCamsData } from '../utils/dataUtil'
-import { BackButton } from '../components/GeneralComponents';
-import CameraModal from '../AucklandTraffic/CameraModal';
+import { BackButton } from '../components/GeneralComponents'
+import CameraModal from '../AucklandTraffic/CameraModal'
 
 const TrafficMap = requireNativeComponent('TrafficCamsViewController')
 
@@ -48,15 +48,13 @@ class TrafficCams extends React.Component {
     console.log(this.state.cameras)
     return (
       <SafeAreaView style={{ height: '100%' }}>
+        <If condition={this.state.markerInfoModal}>
+          <CameraModal markerProps={this.state.markerProps} onClose={() => this.setState({ markerInfoModal: false })} />
+        </If>
         <Layout style={{ height: '100%' }}>
           <If condition={this.state.isLoading}>
             <ActivityIndicator style={{ height: '100%' }} />
           </If>
-          <CameraModal
-            markerProps={this.state.markerProps}
-            modalVisible={this.state.markerInfoModal}
-            onClose={() => this.setState({ markerInfoModal: false })}
-          />
           <TrafficMap
             latLng={{ lat: -36.8485, lng: 174.7633 }}
             zoom={12}

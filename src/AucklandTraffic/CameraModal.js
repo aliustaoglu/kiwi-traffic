@@ -4,7 +4,7 @@ import { Image, Dimensions } from 'react-native'
 import Modal from 'react-native-modal'
 import { Header, SubTitle, Title } from '../components/ModalComponents'
 
-const CameraModal = ({ modalVisible, markerProps, onClose }) => {
+const CameraModal = ({ markerProps, onClose }) => {
   const dims = Dimensions.get('screen')
   const [size, setSize] = useState({ height: 1, width: 1 })
 
@@ -21,7 +21,7 @@ const CameraModal = ({ modalVisible, markerProps, onClose }) => {
       swipeDirection='down'
       onSwipeComplete={onClose}
       backdropOpacity={0.5}
-      isVisible={modalVisible}
+      isVisible
       style={{ flex: 0, width: '90%', backgroundColor: '#fff' }}
     >
       <View>
