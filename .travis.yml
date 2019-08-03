@@ -1,13 +1,30 @@
-language: node_js
-node_js:
-  - "10.16.0"
+matrix:
+  include:
+    - language: node_js
+      node_js:
+        - "10.16.0"
 
-before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.5.1
-  - export PATH="$HOME/.yarn/bin:$PATH"
-  - echo '' > .env
-  - echo "infoConnectUser = '$infoConnectUser'" >> .env
-  - echo "infoConnectPass = '$infoConnectPass'" >> .env
+      before_install:
+        - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.5.1
+        - export PATH="$HOME/.yarn/bin:$PATH"
+        - echo '' > .env
+        - echo "infoConnectUser = '$infoConnectUser'" >> .env
+        - echo "infoConnectPass = '$infoConnectPass'" >> .env
 
-script:
-  - npm test
+      script:
+        - npm test
+    
+    - language: android
+      sudo: true
+      dist: trusty
+      jdk: oraclejdk8
+      android:
+        components:
+          - tools
+          - platform-tools
+          - android-28
+          - build-tools-28.0.3
+      before_install:
+        - cd android
+      script:
+        - ./gradlew build

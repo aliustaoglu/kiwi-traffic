@@ -79,11 +79,12 @@ class SettingsView extends React.Component {
               even pull requests using the repository.
             </Text>
             <Text />
+            <Text>This application uses NZTA InfoConnect public API for traffic, roadworks, closures, area warnings and cameras.</Text>
+            <Text />
             <Text>Developed by Cüneyt Aliustaoğlu</Text>
             <Text />
-            <Text>
-              I am a full stack developer based in Auckland. If you want to work with me connect using the links below.
-            </Text>
+            <Text>I am a full stack developer based in Auckland. If you want to work with me, connect me using the links below.</Text>
+            <Text />
             <SocialLayout>
               <TouchableOpacity onPress={this.onClickSocial('home')}>
                 <SocialIcon name='home' />
