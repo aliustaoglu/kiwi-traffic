@@ -7,6 +7,8 @@ target 'kiwiTraffic' do
 
   # Pods for kiwiTraffic
 
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
   target 'kiwiTrafficTests' do
     inherit! :search_paths
     # Pods for testing

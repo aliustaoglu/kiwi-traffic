@@ -8,6 +8,7 @@ import christchurch from '../images/christchurch.jpg';
 import highway from '../images/highway.jpg';
 import camera from '../images/camera.jpg';
 import ImageCard from './ImageCard';
+import SplashScreen from 'react-native-splash-screen'
 
 const Wrapper = styled.View`
   display: flex;
@@ -18,6 +19,10 @@ const Wrapper = styled.View`
 `;
 
 class LandingView extends React.Component {
+  componentDidMount(){
+    SplashScreen.hide();
+  }
+
   render() {
     return (
       <SafeAreaView style={{ height: '100%' }}>
