@@ -10,6 +10,23 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@drawable/background_splash"
-        android:layout_margin="48dp"
+        android:layout_marginTop="24dp"
+        android:layout_gravity="center"
         />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#f7fedf"
+        android:gravity="center"
+        android:text="@string/splash_text" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true" />
+
 </LinearLayout>
